@@ -27,4 +27,12 @@ sudo apt install -y python3-pip python3-venv
 pip3 install Django
 echo "Django instalado."
 
-echo "Instalación completa: MongoDB, MariaDB y Django están listos para su uso."
+# Instalar Flask y sus dependencias
+echo "Instalando Flask y sus dependencias..."
+sudo apt install -y python3-pip python3-venv
+pip3 install Flask
+echo "Flask instalado."
+
+echo "Instalación completa: MongoDB, MariaDB, Django y Flask están listos para su uso."
+
+
