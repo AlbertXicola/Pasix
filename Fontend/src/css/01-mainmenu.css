@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" );
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('src/img/fondo4.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Your Font', sans-serif; /* Reemplaza 'Your Font' con el nombre de la fuente que prefieras */
+  background-color: rgb(16, 16, 134); /* Azul semitransparente */
+
+  
+}
+
+.menu-container {
+  display: flex;
+  justify-content: flex-end; /* Alinea los elementos a la derecha */
+  align-items: center;
+  background-color: rgba(41, 39, 39, 0);
+  color: rgba(0, 0, 0, 0);
+  padding: 20px 100px; /* Añade más espacio a la derecha para separar de la derecha */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.reg-button {
+  width: 130px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #ffffff;
+  font-weight: 500;
+  margin-left: 40px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-right: 30px;
+}
+
+
+.reg-button:hover {
+  width: 130px;
+  height: 50px;
+  background-color: #564d4d2d;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #ffffff;
+  font-weight: 500;
+  margin-left: 40px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+.menu-button {
+  width: 130px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #fff;
+  font-weight: 500;
+  margin-left: 40px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.menu-button:hover {
+  width: 130px;
+  height: 50px;
+  background-color: #564d4d2d;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #ffffff;
+  font-weight: 500;
+  margin-left: 40px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+}
+
+.login1-button {
+  width: 130px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #fff;
+  font-weight: 500;
+  margin-left: 40px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login1-button:hover {
+  width: 130px;
+  height: 50px;
+  background-color: #564d4d2d;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #ffffff;
+  font-weight: 500;
+  margin-left: 40px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+}
