@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+</head>
+
+
+<body>
+    <header>
+        <h2 class="logo">Logo</h2>
+        <nav class="navigation">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Project</a>
+            <button class="btnLogin-popup">Login</button>
+        </nav>
+    </header>
+
+    <!-- EL MENU LOGIN REGISTRO -->
+
+    <div class="wrapper">
+        <span class="icon-close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="mail"></ion-icon>
+                    </span>
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" id="loginPassword" required>
+                    <label>Contraseña</label>
+                    <button type="button" id="toggleLoginPassword" class="eye-icon">
+                        <ion-icon name="eye-outline"></ion-icon>
+                    </button>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">
+                    Recordarme</label>
+                    <a href="{% url 'olvidada' %}"">¿Olvidaste tu contraseña?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="login-register">
+                    <p>¿No tienes una cuenta? <a href="#" class="register-link">Registrarse</a></p> 
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register">
+            <h2>Registro</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="person"></ion-icon>
+                    </span>
+                    <input type="text" required>
+                    <label>Nombre de usuario</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="mail"></ion-icon>
+                    </span>
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe contener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula y un número.">
+                    <label>Contraseña</label>
+                    <button type="button" id="togglePassword" class="eye-icon">
+                        <ion-icon name="eye-outline"></ion-icon>
+                    </button>
+                </div>
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox"> Acepto los 
+                        <a class="terms" href="{% url 'terminos' %}">términos y condiciones</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn">Registrarse</button>
+                <div class="login-register">
+                    <p>¿Ya tienes una cuenta? <a href="#" class="login-link">Iniciar sesión</a></p> 
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- LO QUE HAY EN HOME, ABIUT, PROJECT -->
+
+    <div class="home-content">
+        <div class="image-container">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.britannica.com%2F40%2F144440-050-DA828627%2FMorgan-Freeman.jpg&f=1&nofb=1&ipt=c07250dd3f74f6e0994c22e6fce05493ac81d17fd9214508aa1ec946bcc3ec0d&ipo=images" alt="Descripción de la imagen">
+        </div>
+        <div class="text-container">
+            <h1 class="titulop">Proyecto Asix 2023-2024</h1>
+            <h2 class="textop">Lorem ipsum dolor melapela amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim hitler, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h2>
+        </div>
+    </div>
+    <div class="home-content hidden">
+
+    </div>
+    
+
+
+    <div class="about-content hidden">
+        <div class="image-container">
+            <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.canadianinquirer.net%2Fwp-content%2Fuploads%2F2018%2F01%2F26993814_1557482061001106_2954167055747999925_n-1-3.jpg&f=1&nofb=1&ipt=e9f76a33a17aa3101fa905bdede3cb45c0f5f6c97dd712f1ef37317be991efde&ipo=images" alt="Descripción de la imagen">
+        </div>
+        <div class="text-container">
+            <h1 class="titulop">about</h1>
+            <h2 class="textop">about ipsum dolor melapela amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim hitler, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h2>
+        </div>
+    </div>
+    <div class="aboyt-content hidden">
+
+    </div>
+
+
+
+    <div class="project-content hidden">
+        <div class="image-container">
+            <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fimages6.fanpop.com%2Fimage%2Fphotos%2F40600000%2FMorgan-Freeman-2009-morgan-freeman-40627157-2790-2790.jpg&f=1&nofb=1&ipt=07d00668b121a4c89d35d9b7e89a21584b4488f83623741694b8908542a54833&ipo=images" alt="Descripción de la imagen">
+        </div>
+        <div class="text-container">
+            <h1 class="titulop">project</h1>
+            <h2 class="textop">ptoject ipsum dolor melapela amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim hitler, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h2>
+        </div>
+    </div>
+
+    
+    
+    <script src="{% static 'app/javascript/script.js' %}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
