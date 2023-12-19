@@ -1,45 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingreso al sistema</title>
-</head>
-<body>
+{% extends 'app/base.html' %}
+{% load static %}
+{% block contenido %}
 
-    <div class="container">
+<div class="wrapper">
+    <span class="icon-close">
+        <ion-icon name="close-outline"></ion-icon>
+    </span>
+    <div class="form-box login">
+        <h2>Login</h2>
+        <form action="#" method="post">
+            {% csrf_token %}
 
-        <div class="row">
-            <div class="col-12 col-md-5 offset-md-3">
-
-                <div class="card">
-                    <div class="card-body">
-
-                        <h2>Ingresa tus credenciales</h2>
-                        <hr>
-                        <form action="" method="post">
-
-                            {% csrf_token %}
-                            {{ form }}
-
-
-                            <a href="{% url 'registro' %}">Registrate</a>
-                            <a href="{% url 'home' %}"> ir al home</a>
-                            <input type="submit" value="ingresar">
-                        </form>
-                    </div>
-
-                </div>
-
+            <div class="input-box">
+                <span class="icon">
+                    <ion-icon name="mail"></ion-icon>
+                </span>
+                {{ form.username }}
+                <label>Email</label>
             </div>
-        </div>
-
-
-
-
-
+            <div class="input-box">
+                <span class="icon">
+                    <ion-icon name="lock-closed"></ion-icon>
+                </span>
+                {{ form.password }}
+                <label>Contraseña</label>
+                <button type="button" id="toggleLoginPassword" class="eye-icon">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </button>
+            </div>
+            <div class="remember-forgot">
+                {{ form.remember_me }} {{ form.remember_me.label_tag }}
+                <a href="{% url 'olvidada' %}">¿Olvidaste tu contraseña?</a>
+            </div>
+            <button type="submit" class="btn">Ingresar</button>
+            <div class="login-register">
+                <p>¿No tienes una cuenta? <a href="{% url 'registro' %}" class="register-link">Registrarse</a></p>
+            </div>
+        </form>
     </div>
+</div>
 
 
-</body>
-</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var togglePassword = document.getElementById("toggleLoginPassword");
+        var passwordInput = document.getElementById("id_password");
+
+        togglePassword.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var closeButton = document.querySelector(".icon-close");
+
+        closeButton.addEventListener("click", function () {
+            // Puedes redirigir a los usuarios a otra página
+            window.location.href = "{% url 'home' %}";
+            
+            // O puedes realizar otra acción que desees
+            // Por ejemplo, mostrar un mensaje, ocultar el formulario, etc.
+        });
+    });
+</script>
+
+
+{% endblock %}
+
+

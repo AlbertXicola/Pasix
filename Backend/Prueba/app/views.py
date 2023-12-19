@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Producto
 from django.contrib import messages
 from .forms import ContactoForm, CustomUserCreatrionForm
+from django.contrib.auth.forms import UserCreationForm
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
 
@@ -13,11 +15,21 @@ def home(request):
     return render(request, 'app/home.html', data)
 
 
+
+
 # Create your views here.
 # @permission_required('app.add_galeria')EJEMPLoooooooooooooooooooooooo
 def galeria(request):
     return render(request, 'app/galeria.html')
+
 # Create your views here.
+
+def olvidada(request):
+    return render(request, 'app/olvidada.html')
+
+def terminos(request):
+    return render(request, 'app/terminos.html')
+
 
 def contacto(request):
     data = {
@@ -55,3 +67,16 @@ def registro(request):
 
 
     return render(request, 'registration/registro.html', data)
+
+
+def user_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Inicia sesión después del registro
+            return redirect('user')  # Redirige a la página deseada después del registro
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'app/user.html', {'form': form})

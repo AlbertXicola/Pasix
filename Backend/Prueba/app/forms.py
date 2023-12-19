@@ -12,14 +12,11 @@ class ContactoForm(forms.ModelForm):
 
 class CustomUserCreatrionForm(UserCreationForm):
 
-
     # valor = forms.ImageField(requiered=False)
     # valor = forms.texto(minval- max val)
 
-
-
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1']
+        fields = ['username', 'email', 'password']
 
 

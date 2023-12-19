@@ -1,39 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de usuario</title>
-</head>
-<body>
+{% extends 'app/base.html' %}
+{% load static %}
 
-    <div class="container">
+{% block contenido %}
+  <div class="wrapper">
+    <form action="" method="post" class="registration-form">
 
-        <div class="row">
-            <div class="col-12 col-md-5 offset-md-3">
+      {% csrf_token %}
+      {{ form.as_p }}
 
-                <div class="card">
-                    <div class="card-body">
+      <button type="submit" class="btn btn-primary">Registrar</button>
+      <p class="login-link"><a href="{% url 'login' %}">Iniciar Sesión</a></p>
+      <p class="home-link"><a href="{% url 'home' %}">Ir al Inicio</a></p>
 
-                        <h2>Registro de usuario</h2>
-                        <hr>
-                        <form action="" method="post">
-
-                            {% csrf_token %}
-                            {{ form }}
-
-
-                            <a href="{% url 'login' %}"> iniciar sesion</a>
-                            <a href="{% url 'home' %}"> ir al home</a>
-                            <input type="submit" value="Registrar">
-                        </form>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-</body>
-</html>
+    </form>
+  </div>
+{% endblock %}
