@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+
+{% block contenido %}
+<br>
+<br>
+
+
+<h2>Contactanos!</h2>
+<form action="" method="post">
+
+    {% csrf_token %}
+
+    {{ form }}
+
+
+
+    <button type="submit" id="guardar">Enviar</button>
+</form>
+{{mensaje}}
+<table id="tablacontactos">
+
+
+</table>
+
+
+{% endblock %}

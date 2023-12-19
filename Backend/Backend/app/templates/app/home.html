@@ -61,26 +61,27 @@
 
         <div class="form-box register">
             <h2>Registro</h2>
-            <form action="#">
+            <form action="{% url 'registro' %}" method="post">
+                {% csrf_token %}
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>
                     </span>
-                    <input type="text" required>
+                    <input type="text" name="username" required>
                     <label>Nombre de usuario</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="mail"></ion-icon>
                     </span>
-                    <input type="email" required>
+                    <input type="email" name="email" required>
                     <label>Email</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="lock-closed"></ion-icon>
                     </span>
-                    <input type="password" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe contener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula y un número.">
+                    <input type="password" name="password1" id="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contraseña debe contener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula y un número.">
                     <label>Contraseña</label>
                     <button type="button" id="togglePassword" class="eye-icon">
                         <ion-icon name="eye-outline"></ion-icon>
@@ -88,7 +89,7 @@
                 </div>
                 <div class="remember-forgot">
                     <label>
-                        <input type="checkbox"> Acepto los 
+                        <input type="checkbox" name="terms"> Acepto los 
                         <a class="terms" href="{% url 'terminos' %}">términos y condiciones</a>
                     </label>
                 </div>
@@ -98,7 +99,6 @@
                 </div>
             </form>
         </div>
-    </div>
     
     <!-- LO QUE HAY EN HOME, ABIUT, PROJECT -->
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso al sistema</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12 col-md-5 offset-md-3">
+
+                <div class="card">
+                    <div class="card-body">
+
+                        <h2>Ingresa tus credenciales</h2>
+                        <hr>
+                        <form action="" method="post">
+
+                            {% csrf_token %}
+                            {{ form }}
+
+
+                            <a href="{% url 'registro' %}">Registrate</a>
+                            <a href="{% url 'home' %}"> ir al home</a>
+                            <input type="submit" value="ingresar">
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+</body>
+</html>

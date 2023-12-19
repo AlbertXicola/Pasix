@@ -31,9 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "admin_interface",
-    'django.contrib.admin',
     'django.contrib.auth',
+    'admin_interface',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -45,6 +45,12 @@ INSTALLED_APPS = [
 
 X_FRAME_OPTIONS='SAMEORIGIN'
 
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+
+LOGIN_REDIRECT_URL= '/usuario'
+
+LOGOUT_REDIRECT_URL= '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

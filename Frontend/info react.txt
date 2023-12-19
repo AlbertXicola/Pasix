@@ -1,5 +1,0 @@
-App.jsx
-LoginForm.jsx
-ProfileForm.jsx
-RegistrationForm.jsx
-ProfilePage.jsxdid

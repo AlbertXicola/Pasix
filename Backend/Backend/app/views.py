@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import ContactoForm
 
-from .forms import ContactoForm, ProductoForms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
 
 def home(request):
     data = {
@@ -31,20 +34,23 @@ def contacto(request):
 
     return render(request, 'app/contacto.html', data)
 
-def agregar_producto(request):
+# En tu archivo views.py
 
 
-    data = {
-        'form': ProductoForms()
-    }
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
+
+
+def register(request):
     if request.method == 'POST':
-        formulario = ProductoForms(data=request.POST, files=request.FILES)
-        if formulario.is_valid():
-            formulario.save()
-            data["mensaje"] = "guardado correctamente"
-        else:
-            data["form"] = formulario
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('nombre_de_la_vista_o_url')  # Reemplaza con la URL correcta
+    else:
+        form = UserCreationForm()
 
-
-    return render(request, 'app/producto/agregar.html', data)
+    return render(request, 'app/usuario.html', {'form': form})
