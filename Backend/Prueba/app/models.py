@@ -23,10 +23,10 @@ class Producto(models.Model):
 
 
 opciones_consultas = [
-    [0, "PEDAZI"],
-    [1, "DE"],
-    [2, "MIERDA"],
-    [3, "SECA"],
+    [0, "Sugerencias"],
+    [1, "Ayuda"],
+    [2, "Reportes"],
+    [3, "Más"],
 ]
 
 
@@ -35,7 +35,7 @@ class Contacto(models.Model):
     correo = models.EmailField()
     tipo_consulta = models.IntegerField(choices= opciones_consultas)
     mensaje = models.TextField()
-    avisos = models.BooleanField()
+
 
     def __str__(self):
         return self.nombre

@@ -36,12 +36,12 @@ header > div {
     width: 50%;
 }
 
-
 .logo {
-  font-size: 2em;
-  color: #ffff;
-  user-select: none;
+  color: #ffffff; /* Blanco */
+  font-size: 24px; /* Tamaño del texto del logo */
+  font-weight: bold; /* Negrita */
 }
+
 
 .navigation a {
   position: relative;
@@ -142,9 +142,26 @@ header > div {
   margin-left: 100px;
 }
 
+.image-containerr img {
+  width: 100%;
+  height: auto;
+  filter: blur(5px); /* Ajusta el valor del desenfoque según sea necesario */
+}
+
 .text-container {
   display: flex;
   flex-direction: column;
+}
+
+.texto-superpuesto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white; /* Cambia el color del texto según sea necesario */
+  font-size: 24px; /* Ajusta el tamaño del texto según sea necesario */
+  font-weight: bold; /* Ajusta el peso de la fuente según sea necesario */
+  text-align: center;
 }
 
 .titulop {
@@ -252,17 +269,211 @@ header > div {
 
 }
 
+/* ======================================================================== */
+/* Estilos generales */
+.about-contentcibt {
+  width: 600px;
+  margin-top: 70px;
+
+  padding: 20px;
+  border: 2px solid rgba(255, 255, 255, .5);
+  border-radius: 21px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  color: #ffffff;
+  
+}
+
+.about-contentcibt h2 {
+  color: #ffffff;
+  text-align: center; /* Centro el contenido */
+
+}
+
+
+/* Estilos para el formulario */
+.contact-form {
+  margin-top: 20px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 8px;
+  margin-top: 9px;
+  font-weight: bold; /* Hace el texto más negrita */
+}
+
+.contact-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: rgba(59, 59, 60, 0.797); /* Cambia este valor al color deseado */
+  box-sizing: border-box;
+  display: inline-block;
+  color: #ffffff; /* Por ejemplo, color de texto gris oscuro */
+}
+.contact-form input[type="text"]:-internal-autofill-selected {
+  appearance: menulist-button;
+  background-image: none !important;
+  background-color: -internal-light-dark(rgb(27, 98, 222), rgba(0, 73, 208, 0.4)) !important;
+  color: fieldtext !important;
+}
+
+/* Estilos para Autofill y desactivación del fondo predeterminado del Autofill */
+.contact-form input[type="text"]:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #39393A inset;
+  /* Cambia el color del texto dentro del campo Autofill */
+  -webkit-text-fill-color: #ffffff;
+}
+
+/* Para eliminar el fondo amarillo en algunos navegadores al autofill */
+.contact-form input[type="text"]:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #39393A inset;
+  -webkit-text-fill-color: #ffffff;
+}
+
+/* Para navegadores que no admiten el modificador :-webkit-autofill */
+.contact-form input[type="text"]:focus {
+  background-color: #39393A;
+} 
+
+.contact-form input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  background: rgba(59, 59, 60, 0.797); /* Cambia este valor al color deseado */
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+  /* Agrega estilos específicos para el input de tipo email aquí */
+  color: #ffffff; /* Por ejemplo, color de texto azul */
+  text-decoration: none;
+}
+
+/* Estilos para Autofill y desactivación del fondo predeterminado del Autofill */
+.contact-form input[type="email"]:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #39393A inset;
+  /* Cambia el color del texto dentro del campo Autofill */
+  -webkit-text-fill-color: #ffffff;
+}
+
+/* Para eliminar el fondo amarillo en algunos navegadores al autofill */
+.contact-form input[type="email"]:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #39393A inset;
+  -webkit-text-fill-color: #ffffff;
+}
+
+/* Para navegadores que no admiten el modificador :-webkit-autofill */
+.contact-form input[type="email"]:focus {
+  background-color: #39393A;
+} 
 
 
 
 
 
+.contact-form textarea {
+  width: 100%;
+  height: 80px;
+  padding: 20px; /* Ajusta el valor de padding según sea necesario */
+  margin-bottom: 12px;
+  background: rgba(59, 59, 60, 0.797); /* Cambia este valor al color deseado */
+  color: #ffffff; /* Por ejemplo, color de texto azul */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+}
 
 
 
+.contact-form button {
+  width: 100%;
+  height: 45px;
+  background:transparent;
+  border: 2px solid rgba(255, 255, 255, .5);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.contact-form button:hover {
+  background-color: #7c7c7c;
+}
+
+/* Estilos para la tabla */
+.contact-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.contact-table th,
+.contact-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.contact-table th {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.mensaje {
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+
+select {
+
+  width: 120px;
+  height: 30px;
+  background: rgba(59, 59, 60, 0.797);
+  border: 2px solid rgba(255, 255, 255, .5);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  outline: none;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  appearance:inherit;
+  color: white;
+}
+
+/* Estilo para cambiar la apariencia del borde cuando el campo está enfocado */
+select:focus {
+  border-color: rgba(255, 255, 255, .5); /* Cambia el color del borde al enfocar el campo */
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5); /* Sombra al enfocar el campo */
+}
+
+/* Estilo para los bordes redondeados de las opciones dentro del campo de selección */
+select option {
+  border-radius: 4px;
+}
+
+/* Estilo para cambiar la apariencia del campo cuando se pasa sobre las opciones */
+select option:hover {
+  background-color: #2f2d2d; /* Cambia el color de fondo al pasar sobre las opciones */
+}
 
 
 
+/* ======================================================================== */
 
 
 
@@ -270,7 +481,7 @@ header > div {
 .wrapper {
   position: relative;
   width: 400px;
-  height: 440px;
+  margin-top: 30px;
   background:transparent;
   border: 2px solid rgba(255, 255, 255, .5);
   border-radius: 21px;
@@ -284,10 +495,8 @@ header > div {
   transition: transform .5s ease, height .2s ease;
 }
 
-.wrapper.active-popup {
-  transform: scale(1);
 
-}
+
 
 
 
@@ -385,8 +594,15 @@ header > div {
   color: #ffffff;
   font-weight: 600;
   padding: 0 35px 0 5px;
-
 }
+
+.input-box input:-webkit-autofill {
+  appearance: menulist-button;
+  background-image: none !important;
+  background-color: rgb(145, 28, 28) !important; /* Adjust as needed */
+  color: fieldtext !important;
+}
+
 
 .input-box .icon {
   position: absolute;
@@ -476,3 +692,68 @@ header > div {
   
 }
 
+
+
+/* ================================================== */
+
+/* .registration-container {
+  position: relative;
+  width: 400px;
+  height: 440px;
+  background:transparent;
+  border: 2px solid rgba(255, 255, 255, .5);
+  border-radius: 21px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform .5s ease, height .2s ease;
+  color: white;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: white;
+
+}
+
+.btn-register {
+  width: 100%;
+  height: 45px;
+  background:transparent;
+  border: 2px solid rgba(255, 255, 255, .5);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  color: #fff;
+  font-weight: 500;
+
+}
+
+.btn-register:hover {
+  background: transparent;
+}
+
+.login-link,
+.home-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-link a,
+.home-link a {
+  text-decoration: none;
+  color: #333;
+}
+
+.login-link a:hover,
+.home-link a:hover {
+  text-decoration: underline;
+} */

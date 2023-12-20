@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Producto
 from django.contrib import messages
-from .forms import ContactoForm, CustomUserCreatrionForm
+from .forms import ContactoForm, CustomUserCreationForm
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import authenticate, login
@@ -40,7 +40,7 @@ def contacto(request):
         formulario = ContactoForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
-            data["mensaje"] = "contacto guardado"
+            data["mensaje"] = "Mensaje enviado correctamente"
         else:
             data["form"] = formulario
 
@@ -51,20 +51,15 @@ def contacto(request):
 
 
 def registro(request):
-    data= {
-        'form':CustomUserCreatrionForm()
-    }
+    data = {'form': CustomUserCreationForm()}
 
     if request.method == 'POST':
-        formulario = CustomUserCreatrionForm(data=request.POST)
+        formulario = CustomUserCreationForm(data=request.POST)
         if formulario.is_valid():
-            formulario.save()
-            user = authenticate(username=formulario.cleaned_data["username"], password=formulario.cleaned_data["password1"])
+            user = formulario.save()  # Guarda al usuario directamente
             login(request, user)
-            messages.success(request, "registro correcto")
-            return redirect(to="home")
-        data["form"] = formulario
-
+            messages.success(request, "Registro correcto")
+            return redirect('home')
 
     return render(request, 'registration/registro.html', data)
 

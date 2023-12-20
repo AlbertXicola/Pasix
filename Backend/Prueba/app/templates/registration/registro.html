@@ -1,17 +1,120 @@
 {% extends 'app/base.html' %}
 {% load static %}
-
 {% block contenido %}
-  <div class="wrapper">
-    <form action="" method="post" class="registration-form">
 
-      {% csrf_token %}
-      {{ form.as_p }}
+<div class="wrapper">
+  <span class="icon-close">
+      <ion-icon name="close-outline"></ion-icon>
+  </span>
+  <div class="form-box login">
+      <h2>Registro</h2>
+      <form action="#" method="post" autocomplete="off">
+          {% csrf_token %}
 
-      <button type="submit" class="btn btn-primary">Registrar</button>
-      <p class="login-link"><a href="{% url 'login' %}">Iniciar Sesión</a></p>
-      <p class="home-link"><a href="{% url 'home' %}">Ir al Inicio</a></p>
+          <div class="input-box">
+              <span class="icon">
+                  <ion-icon name="person"></ion-icon>
+              </span>
+              {{ form.username }}
+              <label>Usuario</label>
+              {% if form.username.errors %}
+                <span class="error">{{ form.username.errors }}</span>
+              {% endif %}
+          </div>
 
-    </form>
+          <div class="input-box">
+              <span class="icon">
+                <ion-icon name="mail"></ion-icon>
+              </span>
+              {{ form.email }}
+              <label>Correo electrónico</label>
+              {% if form.email.errors %}
+                <span class="error">{{ form.email.errors }}</span>
+              {% endif %}
+          </div>
+
+          <div class="input-box">
+              <span class="icon">
+                <ion-icon name="lock-closed"></ion-icon>
+              </span>
+              {{ form.password1 }}
+              <label>Contraseña</label>
+              {% if form.password1.errors %}
+                <span class="error">{{ form.password1.errors }}</span>
+              {% endif %}
+              <button type="button" id="toggleLoginPassword" class="eye-icon">
+                <ion-icon name="eye-outline"></ion-icon>
+              </button>
+          </div>
+
+          <div class="input-box">
+              <span class="icon">
+                <ion-icon name="lock-closed"></ion-icon>
+              </span>
+              {{ form.password2 }}
+              <label>Repite Contraseña</label>
+              {% if form.password2.errors %}
+                <span class="error">{{ form.password2.errors }}</span>
+              {% endif %}
+              <button type="button" id="toggleLoginPassword" class="eye-icon">
+                <ion-icon name="eye-outline"></ion-icon>
+              </button>
+          </div>
+
+          <div class="remember-forgot">
+              <p>Acepta nuestros <a href="{% url 'terminos' %}" class="register-link">términos y condiciones</a></p>
+          </div>
+
+          <button type="submit" class="btn">Registrarse</button>
+
+          <div class="login-register">
+            <p>¿Tienes cuenta?  <a href="{% url 'login' %}" class="register-link">Inicia sesión</a></p>
+          </div>
+      </form>
   </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var togglePassword = document.getElementById("toggleLoginPassword");
+      var passwordInput = document.getElementById("id_password1");
+
+      togglePassword.addEventListener("click", function () {
+          if (passwordInput.type === "password") {
+              passwordInput.type = "text";
+          } else {
+              passwordInput.type = "password";
+          }
+      });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var togglePassword = document.getElementById("toggleLoginPassword");
+      var passwordInput = document.getElementById("id_password2");
+
+      togglePassword.addEventListener("click", function () {
+          if (passwordInput.type === "password") {
+              passwordInput.type = "text";
+          } else {
+              passwordInput.type = "password";
+          }
+      });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      var closeButton = document.querySelector(".icon-close");
+
+      closeButton.addEventListener("click", function () {
+          // Puedes redirigir a los usuarios a otra página
+          window.location.href = "{% url 'home' %}";
+          
+          // O puedes realizar otra acción que desees
+          // Por ejemplo, mostrar un mensaje, ocultar el formulario, etc.
+      });
+  });
+</script>
+
 {% endblock %}

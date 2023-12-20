@@ -1,18 +1,19 @@
 {% extends 'app/base.html' %}
 {% load static %}
+
 {% block contenido %}
 
-<div class="about-content">
-    <h2>Contacto</h2>
-    <form action="" method="post">
-    
-        {% csrf_token %}
-        {{ form }}
-    
-        <button type="submit" id="guardar">Enviar</button>
-    </form>
-    {{mensaje}}
-    <table id="tablacontactos"></table>
-</div>
+    <div class="about-contentcibt">
+        <h2>Envia un Mensaje!</h2>
+        <form class="contact-form" action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn-enviar">Enviar</button>
+        </form>
+        <p class="mensaje">{{ mensaje }}</p>
+    </div>
+
 
 {% endblock %}
+
+

@@ -8,7 +8,7 @@
     </span>
     <div class="form-box login">
         <h2>Login</h2>
-        <form action="#" method="post">
+        <form action="#" method="post" autocomplete="off">
             {% csrf_token %}
 
             <div class="input-box">
@@ -16,7 +16,7 @@
                     <ion-icon name="mail"></ion-icon>
                 </span>
                 {{ form.username }}
-                <label>Email</label>
+                <label>Usuario</label>
             </div>
             <div class="input-box">
                 <span class="icon">
@@ -39,6 +39,9 @@
         </form>
     </div>
 </div>
+
+
+
 
 
 <script>
