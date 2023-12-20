@@ -1,0 +1,7 @@
+django
+pymongo
+pip install flask
+
+Abrir visual con administrador y decir que somos los autores del codigo.
+
+Se creara la carpeta para analizar y las clasificaciones, lo mas seguro en la carpeta del usuario, si no lo sabeis, en la terminal se hace un print de donde esta la carpeta de analizar.
