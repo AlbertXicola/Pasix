@@ -15,7 +15,7 @@ ruta_destino_Cuarentena = "Finalizado/Cuarentena"
 ruta_destino_Malicioso = "Finalizado/Malicioso"
 
 # Conexión a MongoDB
-client = pymongo.MongoClient("mongodb://172.27.64.1:27017/")
+client = pymongo.MongoClient("mongodb://pasix:20Logicalis21@172.27.64.1:27017/")
 db = client["Proyecto"]
 collection = db["Archivos"]
 
@@ -123,7 +123,7 @@ def upload_file():
                 os.makedirs(os.path.join(destino))
 
             shutil.move(archivo_path, os.path.join(destino, file.filename))
-            
+
             mensaje = f'Datos agregados a la base de datos.'
             return jsonify({'message': mensaje, 'data': data_to_insert})
 
