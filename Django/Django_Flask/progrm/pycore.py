@@ -15,7 +15,7 @@ ruta_destino_Cuarentena = "Finalizado/Cuarentena"
 ruta_destino_Malicioso = "Finalizado/Malicioso"
 
 # Conexión a MongoDB
-client = pymongo.MongoClient("mongodb://pasix:20Logicalis21@172.27.64.1:27017/")
+client = pymongo.MongoClient("mongodb://pasix:20Logicalis21@172.17.16.1:27017/")
 db = client["Proyecto"]
 collection = db["Archivos"]
 
@@ -46,7 +46,7 @@ def obtener_resultados_virustotal(file_url):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('pycore.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():

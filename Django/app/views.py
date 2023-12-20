@@ -1,21 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import Producto
+# from .models import Producto
 from django.contrib import messages
 from .forms import ContactoForm, CustomUserCreationForm
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
+import os
+
 
 def home(request):
-    productos = Producto.objects.all()
-    data = {
-        'productos': productos
-    }
-    return render(request, 'app/home.html', data)
-
-
-
+    return render(request, 'app/home.html')
 
 # Create your views here.
 # @permission_required('app.add_galeria')EJEMPLoooooooooooooooooooooooo
@@ -29,6 +24,10 @@ def olvidada(request):
 
 def terminos(request):
     return render(request, 'app/terminos.html')
+
+
+def perfil(request):
+    return render(request, 'app/perfil.html')
 
 
 def contacto(request):
@@ -75,3 +74,9 @@ def user_view(request):
         form = UserCreationForm()
 
     return render(request, 'app/user.html', {'form': form})
+
+
+
+def pycore_view(request):
+    # Tu lógica de vista aquí
+    return render(request, 'pycore.html')  # o el nombre correcto de tu plantilla

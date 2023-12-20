@@ -481,7 +481,8 @@ select option:hover {
 .wrapper {
   position: relative;
   width: 400px;
-  margin-top: 30px;
+  height: 570px;
+  margin-top: 50px;
   background:transparent;
   border: 2px solid rgba(255, 255, 255, .5);
   border-radius: 21px;
@@ -496,13 +497,6 @@ select option:hover {
 }
 
 
-
-
-
-
-.wrapper{
-  height: 520px;
-}
 
 
 .wrapper .form-box {
@@ -757,3 +751,5 @@ select option:hover {
 .home-link a:hover {
   text-decoration: underline;
 } */
+
+

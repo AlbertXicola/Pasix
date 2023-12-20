@@ -1,0 +1,130 @@
+{% extends 'app/user.html' %}
+{% load static %}
+{% block contenido %}
+
+
+<style>
+*{
+
+font-family: 'Poppins', sans-serif;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  background-size: cover; 
+  background-position: center;
+  height: 100vh;
+  overflow: hidden; 
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centra horizontalmente */
+}
+
+header h1 {
+  margin: 0;
+  line-height: 70px;
+}
+
+nav {
+  background-color: #444;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+section {
+  padding: 20px;
+  color: rgb(0, 0, 0);
+}
+
+
+
+.project-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1200px;
+  height: 450px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, .5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+  color: #ffffff;
+}
+.project-content.hidden {
+  opacity: 0;
+  pointer-events: none; /* Evita interacciones con elementos ocultos */
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+}
+
+.image-container img {
+  width: 400px; /* Ajusta según sea necesario */
+  height: auto; /* Autoajusta la altura en proporción al ancho */
+  border-radius: 10px; /* Ajusta según sea necesario */
+  margin-right: 100px;
+  margin-left: 100px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.titulop {
+  color: #fff;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 20px; /* Ajusta según sea necesario */
+}
+.textop {
+  color: hsl(0, 0%, 100%);
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-right: 100px;
+}
+
+</style>
+
+<div class="project-content">
+    <div class="image-containerr">
+        <img src="{% static 'app/img/imagen.jpg' %}" alt="Descripción de la imagen">
+        <div class="texto-superpuesto">Próximamente </div>
+    </div>
+</div>
+
+{% endblock %}

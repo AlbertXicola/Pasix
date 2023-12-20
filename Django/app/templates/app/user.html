@@ -1,95 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú de Usuario</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>USER</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'app/css/user_estilos.css' %}">
+        <!-- Agrega la siguiente línea para el ícono -->
+        <link rel="icon" href="{% static 'app/img/icono.png' %}" type="image/png">
+    </head>
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav {
-            background-color: #eee;
-            padding: 10px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            padding: 8px;
-            margin: 5px;
-            display: inline-block;
-            border-radius: 5px;
-        }
-
-        nav a:hover {
-            background-color: #ddd;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-        }
-    </style>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú de Usuario</title>
-    <style>
-        /* Estilos del menú y del contenido para usuarios autenticados */
-        /* ... */
-    </style>
-</head>
-<body>
-
-
-        {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
+    <body background="{% static '/app/img/fondo5.png' %}">
+        
         <header>
-            <h1>APBI2</h1>
+            <h1>Panel de Usuario</h1>
         </header>
-        
-        <div class="wrapper">
-            <nav>
-                <a href="{% url 'home' %}">Inicio</a>
-                <a href="#">Perfil</a>
-                <a href="#">Configuración</a>
-                <a href="{% url 'logout' %}">Cerrar Sesión</a>
-            </nav>
-        
-            <div class="container">
-            <h2>Bienvenido, {{ user.username }}</h2>
-            <p>Proximamente...</p>
+
+        <nav>
+            <a href="{% url 'home' %}">Inicio</a>
+            <!-- <a href="{% url 'perfil' %}">Perfil</a> -->
+            <!-- <a href="#">Configuración</a> -->
+            <a href="{% url 'pycore' %}">Archivos</a>
+            <a href="{% url 'logout' %}">Cerrar Sesión</a>
+        </nav>
+
+        {% block contenido %}
+
+    
+
+        {% endblock %}
+
+
         {% else %}
-        <header>
-            <h1>Ups...</h1>
-        </header>
-        
-        <div class="wrapper">
-            <nav>
-            </nav>
-        
-            <div class="container">
-            <p>Debes iniciar sesión para acceder a esta página.</p>
-            <a href="{% url 'login' %}">Iniciar Sesión</a>
+        <section id="inicio">
+            <h2>no no no amigo mio, donde vas?</h2>
+            <p>Contenido de la página de inicio, cuando inicies sesion, lechuguero</p>
+        </section>
         {% endif %}
-    </div>
-</div>
 
-</body>
-</html>
-
+    </body>
+    </html>
+ 

@@ -1,5 +1,8 @@
-django
+django == 4.1.13
+python.exe -m pip install --upgrade pip
 pymongo
+pillow
+django-admin-interface
 pip install flask
 
 Abrir visual con administrador y decir que somos los autores del codigo.
