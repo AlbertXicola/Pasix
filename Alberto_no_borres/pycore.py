@@ -119,15 +119,13 @@ def upload_file():
             elif malicious_segunda_solicitud > 5:
                 destino = ruta_destino_Malicioso
 
-            mensaje = f'Datos agregados a la base de datos.'
-            return jsonify({'message': mensaje, 'data': data_to_insert})
-
             if not os.path.exists(os.path.join(destino)):
                 os.makedirs(os.path.join(destino))
 
             shutil.move(archivo_path, os.path.join(destino, file.filename))
-
-            return jsonify({'message': 'Datos agregados a la base de datos.', 'data': data_to_insert})
+            
+            mensaje = f'Datos agregados a la base de datos.'
+            return jsonify({'message': mensaje, 'data': data_to_insert})
 
         else:
             return jsonify({'error': 'Error al obtener resultados de VirusTotal con el self.'}), 500
