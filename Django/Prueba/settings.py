@@ -68,7 +68,8 @@ ROOT_URLCONF = 'Prueba.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['C:\\Users\\alber\\Escritorio\\Proyecto\\Django\\Django_Flask\\progrm\\templates'],
+        'DIRS': ['C:\\Users\\alber\\OneDrive - Stucom, S.A\\Curso 2\\Assignaturas\\Proyecto-ASIX-2\\Django\\Django_Flask\\progrm\\templates'],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

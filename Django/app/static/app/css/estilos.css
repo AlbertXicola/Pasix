@@ -563,20 +563,15 @@ select option:hover {
 
 .input-box label {
   position: absolute;
-  top: 50%;
+  top: -15px;
   left: 5px;
-  transform: translateY(-50%);
   font-size: 1em;
   color: #ffffff;
   font-weight: 500;
   pointer-events: none;
-  transition: .5s;
+
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label {
-  top: -5px;
-}
 
 .input-box input {
   width: 100%;
@@ -589,12 +584,35 @@ select option:hover {
   font-weight: 600;
   padding: 0 35px 0 5px;
 }
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid transparent;
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px transparrent inset;
+  transition: background-color 5000s ease-in-out 0s;
+  font-weight: 600;
+  width: 100%;
+  height: 100%;
+}
 
 .input-box input:-webkit-autofill {
-  appearance: menulist-button;
-  background-image: none !important;
-  background-color: rgb(145, 28, 28) !important; /* Adjust as needed */
-  color: fieldtext !important;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: #ffffff;
+
+  padding: 0 35px 0 5px;
 }
 
 
@@ -630,6 +648,7 @@ select option:hover {
   text-decoration: underline;
 }
 
+
 .btn {
   width: 100%;
   height: 45px;
@@ -655,10 +674,11 @@ select option:hover {
 
 .login-register p a{
 
-  color: #ffffff;
+  color: #afafaf;
   text-decoration: none;
   font-weight: 600;
 }
+
 
 .login-register p a:hover {
   text-decoration: underline;

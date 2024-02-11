@@ -10,10 +10,6 @@ class ContactoForm(forms.ModelForm):
         model = Contacto
         fields = '__all__'
 
-
-
-
-
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         label="Nombre de usuario",
@@ -23,10 +19,10 @@ class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(
         label="Dirección de correo electrónico"
     )
-
+     
     password1 = forms.CharField(
         label="Contraseña",
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput, 
         help_text="La contraseña debe contener al menos un carácter '@'."
     )
 

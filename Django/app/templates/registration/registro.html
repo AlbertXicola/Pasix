@@ -22,6 +22,10 @@
               {% endif %}
           </div>
 
+
+
+
+
           <div class="input-box">
               <span class="icon">
                 <ion-icon name="mail"></ion-icon>
@@ -33,6 +37,11 @@
               {% endif %}
           </div>
 
+
+
+
+
+
           <div class="input-box">
               <span class="icon">
                 <ion-icon name="lock-closed"></ion-icon>
@@ -42,10 +51,16 @@
               {% if form.password1.errors %}
                 <span class="error">{{ form.password1.errors }}</span>
               {% endif %}
-              <button type="button" id="toggleLoginPassword" class="eye-icon">
+              <button type="button" id="1toggleLoginPassword" class="eye-icon">
                 <ion-icon name="eye-outline"></ion-icon>
               </button>
           </div>
+
+
+
+
+
+
 
           <div class="input-box">
               <span class="icon">
@@ -56,18 +71,18 @@
               {% if form.password2.errors %}
                 <span class="error">{{ form.password2.errors }}</span>
               {% endif %}
-              <button type="button" id="toggleLoginPassword" class="eye-icon">
+              <button type="button" id="2toggleLoginPassword" class="eye-icon">
                 <ion-icon name="eye-outline"></ion-icon>
               </button>
           </div>
 
-          <div class="remember-forgot">
-              <p>Acepta nuestros <a href="{% url 'terminos' %}" class="register-link">términos y condiciones</a></p>
-          </div>
 
           <button type="submit" class="btn">Registrarse</button>
 
+
+
           <div class="login-register">
+            <p>Acepta nuestros <a href="{% url 'terminos' %}" class="register-link">términos y condiciones</a></p>
             <p>¿Tienes cuenta?  <a href="{% url 'login' %}" class="register-link">Inicia sesión</a></p>
           </div>
       </form>
@@ -76,32 +91,32 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-      var togglePassword = document.getElementById("toggleLoginPassword");
+      var togglePassword = document.getElementById("1toggleLoginPassword");
       var passwordInput = document.getElementById("id_password1");
 
-      togglePassword.addEventListener("click", function () {
-          if (passwordInput.type === "password") {
-              passwordInput.type = "text";
-          } else {
-              passwordInput.type = "password";
-          }
+      togglePassword.addEventListener("mousedown", function () {
+          passwordInput.type = "text";
       });
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-      var togglePassword = document.getElementById("toggleLoginPassword");
-      var passwordInput = document.getElementById("id_password2");
 
-      togglePassword.addEventListener("click", function () {
-          if (passwordInput.type === "password") {
-              passwordInput.type = "text";
-          } else {
-              passwordInput.type = "password";
-          }
+      togglePassword.addEventListener("mouseup", function () {
+          passwordInput.type = "password";
       });
   });
 </script>
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          var togglePassword = document.getElementById("2toggleLoginPassword");
+          var passwordInput = document.getElementById("id_password2");
+
+          togglePassword.addEventListener("mousedown", function () {
+              passwordInput.type = "text";
+          });
+
+          togglePassword.addEventListener("mouseup", function () {
+              passwordInput.type = "password";
+          });
+      });
+  </script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {

@@ -1,10 +1,10 @@
-django == 4.1.13
-python.exe -m pip install --upgrade pip
-pymongo
-pillow
-django-admin-interface
+django == 5.0.1
+python.exe -m pip 
+pyp install --upgrade pip
+pip install pymongo
+pip install pillow
+pip install django-admin-interface
 pip install flask
 
-Abrir visual con administrador y decir que somos los autores del codigo.
 
-Se creara la carpeta para analizar y las clasificaciones, lo mas seguro en la carpeta del usuario, si no lo sabeis, en la terminal se hace un print de donde esta la carpeta de analizar.
+# Se creara la carpeta para analizar y las clasificaciones, lo mas seguro en la carpeta del usuario, si no lo sabeis, en la terminal se hace un print de donde esta la carpeta de analizar.
