@@ -48,7 +48,7 @@ gnome-terminal -- sudo docker-compose up
 
 sleep 20
 
-mongodb-compass mongodb://pasix:20Logicalis21@172.17.0.1:27017/Proyecto
+mongodb-compass mongodb://pasix:20Logicalis21@1172.19.16.1:27017/Proyecto
 
 xdg-open http://localhost:8000
 exit
