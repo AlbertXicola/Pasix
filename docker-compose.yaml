@@ -3,7 +3,7 @@ version: "3.8"
 services:
   
   mongo-db:
-    image: mongo:latest
+    image: mongo:4.4
     environment:
       MONGO_INITDB_DATABASE: Proyecto
       MONGO_INITDB_ROOT_USERNAME: pasix
