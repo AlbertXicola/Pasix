@@ -1,10 +1,10 @@
 sudo apt update
-sudo apt install python3 python3-pip -y
+echo 's' | sudo apt install python3 python3-pip -y
 
 sudo apt install python3.11-venv
 
+echo 's' | sudo apt install python3-pip
 
-sudo apt install python3-pip
 sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 pip3 install pymongo
 pip3 install pillow
@@ -17,15 +17,13 @@ sudo apt install ./mongodb-compass_1.42.0_amd64.deb
 sudo chmod +r /home/pasix/mongodb-compass_1.42.0_amd64.deb
 sudo apt install ./mongodb-compass_1.42.0_amd64.deb
 
-
-sudo apt install curl
+echo 's' | sudo apt install curl
 
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 sudo chmod +x /usr/local/bin/docker-compose
 
-
-sudo apt install docker.io
+echo 's' | sudo apt install docker.io
 sudo docker ps
 sudo apt install git
 
@@ -46,11 +44,16 @@ sleep 5
 gnome-terminal -- sudo docker-compose up
 
 
-sleep 50
+sleep 60
 
-mongodb-compass mongodb://pasix:20Logicalis21@172.19.16.1:27017/Proyecto
+MONGODB_IP=$(sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' docker-compose)
 
+# Construir la cadena de conexión con la IP obtenida
+CONEXION="mongodb://pasix:20Logicalis21@$MONGODB_IP:27017/Proyecto"
+
+# Usar la variable CONEXION en lugar de la dirección IP estática
+mongodb-compass $CONEXION
 xdg-open http://localhost:8000
-firefox http://localhost:8000
+
 
 exit
