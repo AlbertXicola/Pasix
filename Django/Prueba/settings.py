@@ -68,7 +68,7 @@ ROOT_URLCONF = 'Prueba.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/Django/Django_Flask/progrm/templates'],
+        'DIRS': ['Django/Django_Flask/progrm/templates'],
 
         'APP_DIRS': True,
         'OPTIONS': {
