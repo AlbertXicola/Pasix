@@ -77,6 +77,7 @@ def user_view(request):
 
 
 
+
 def pycore_view(request):
     # Tu lógica de vista aquí
     return render(request, 'pycore.html')  # o el nombre correcto de tu plantilla

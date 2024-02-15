@@ -15,7 +15,7 @@ ruta_destino_Cuarentena = "Finalizado/Cuarentena"
 ruta_destino_Malicioso = "Finalizado/Malicioso"
 
 # Conexión a MongoDB
-client = pymongo.MongoClient("mongodb://pasix:20Logicalis21@172.17.16.1:27017/")
+client = pymongo.MongoClient("mongodb://pasix:20Logicalis21@127.0.0.1:27017/")
 db = client["Proyecto"]
 collection = db["Archivos"]
 
@@ -78,7 +78,7 @@ def upload_file():
 
     response = enviar_a_virustotal(archivo_path)
 
-    time.sleep(120)
+    time.sleep(20)
 
     if response.status_code == 200:
         vt_response = response.json()
