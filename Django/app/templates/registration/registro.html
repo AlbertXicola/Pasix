@@ -8,7 +8,7 @@
   </span>
   <div class="form-box login">
       <h2>Registro</h2>
-      <form action="#" method="post" autocomplete="off">
+      <form action="#" method="post" autocomplete="off" onsubmit="return validatePasswords()">
           {% csrf_token %}
 
           <div class="input-box">
@@ -22,10 +22,6 @@
               {% endif %}
           </div>
 
-
-
-
-
           <div class="input-box">
               <span class="icon">
                 <ion-icon name="mail"></ion-icon>
@@ -36,11 +32,6 @@
                 <span class="error">{{ form.email.errors }}</span>
               {% endif %}
           </div>
-
-
-
-
-
 
           <div class="input-box">
               <span class="icon">
@@ -56,12 +47,6 @@
               </button>
           </div>
 
-
-
-
-
-
-
           <div class="input-box">
               <span class="icon">
                 <ion-icon name="lock-closed"></ion-icon>
@@ -76,10 +61,7 @@
               </button>
           </div>
 
-
           <button type="submit" class="btn">Registrarse</button>
-
-
 
           <div class="login-register">
             <p>Acepta nuestros <a href="{% url 'terminos' %}" class="register-link">términos y condiciones</a></p>
@@ -90,6 +72,7 @@
 </div>
 
 <script>
+
   document.addEventListener("DOMContentLoaded", function () {
       var togglePassword = document.getElementById("1toggleLoginPassword");
       var passwordInput = document.getElementById("id_password1");
@@ -102,23 +85,20 @@
           passwordInput.type = "password";
       });
   });
-</script>
-  <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          var togglePassword = document.getElementById("2toggleLoginPassword");
-          var passwordInput = document.getElementById("id_password2");
 
-          togglePassword.addEventListener("mousedown", function () {
-              passwordInput.type = "text";
-          });
+  document.addEventListener("DOMContentLoaded", function () {
+      var togglePassword = document.getElementById("2toggleLoginPassword");
+      var passwordInput = document.getElementById("id_password2");
 
-          togglePassword.addEventListener("mouseup", function () {
-              passwordInput.type = "password";
-          });
+      togglePassword.addEventListener("mousedown", function () {
+          passwordInput.type = "text";
       });
-  </script>
 
-<script>
+      togglePassword.addEventListener("mouseup", function () {
+          passwordInput.type = "password";
+      });
+  });
+
   document.addEventListener("DOMContentLoaded", function () {
       var closeButton = document.querySelector(".icon-close");
 
@@ -130,6 +110,33 @@
           // Por ejemplo, mostrar un mensaje, ocultar el formulario, etc.
       });
   });
+  function validatePasswords() {
+      var password1 = document.getElementById("id_password1").value;
+      var password2 = document.getElementById("id_password2").value;
+
+      // Verifica si las contraseñas coinciden
+      if (password1 !== password2) {
+          alert("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
+          return false; // Evita que el formulario se envíe
+      }
+      
+      // Verifica si la contraseña tiene al menos 8 caracteres
+      if (password1.length < 8) {
+          alert("La contraseña debe tener al menos 8 caracteres.");
+          return false; // Evita que el formulario se envíe
+      }
+      // Verifica si la contraseña cumple con los requisitos
+      var regexSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+      var regexNumber = /[0-9]+/;
+      var regexUpperCase = /[A-Z]+/;
+
+      if (!regexSpecialChar.test(password1) || !regexNumber.test(password1) || !regexUpperCase.test(password1)) {
+          alert("La contraseña debe contener al menos un carácter especial, un número y una mayúscula.");
+          return false; // Evita que el formulario se envíe
+      }
+
+      return true; // Permite que el formulario se envíe si las contraseñas coinciden y cumplen con los requisitos
+  }
 </script>
 
 {% endblock %}
