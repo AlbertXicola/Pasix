@@ -12,6 +12,9 @@ import os
 
 def home(request):
     return render(request, 'app/home.html')
+
+def archivos(request):
+    return render(request, 'app/archivos.html')
     
 
 def cierre(request):
