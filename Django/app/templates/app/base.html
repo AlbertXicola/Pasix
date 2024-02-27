@@ -23,7 +23,7 @@
             <a href="{% url 'galeria' %}">Galeria</a>
             <a href="{% url 'contacto' %}">Contacta</a>
             {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}">Cerrar sesión</a>
+                <a href="{% url 'cierre' %}">Cerrar sesión</a>
                 <a href="{% url 'user' %}">@{{ user.username }}</a>
             {% else %}
                 <a href="{% url 'registro' %}">Registrate</a>

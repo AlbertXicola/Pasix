@@ -4,13 +4,19 @@ from django.contrib import messages
 from .forms import ContactoForm, CustomUserCreationForm
 from django.contrib.auth.forms import UserCreationForm
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 import os
 
 
+
 def home(request):
     return render(request, 'app/home.html')
+    
+
+def cierre(request):
+    logout(request)  # Cierra la sesión del usuario
+    return redirect('home')  # Redirige a la página de inicio (asumiendo que 'home' es el nombre de la URL para la página de inicio)
 
 # Create your views here.
 # @permission_required('app.add_galeria')EJEMPLoooooooooooooooooooooooo
@@ -82,9 +88,4 @@ def pycore_view(request):
     # Tu lógica de vista aquí
     return render(request, 'pycore.html')  # o el nombre correcto de tu plantilla
 
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
 
-def auth_logout(request):
-  logout(request)
-  return redirect('home')

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, contacto, galeria, registro, olvidada, terminos, user_view, pycore_view, perfil, auth_logout
+from .views import home, contacto, galeria, registro, olvidada, terminos, user_view, pycore_view, perfil, cierre
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -13,10 +13,7 @@ urlpatterns = [
     path('flask/', TemplateView.as_view(template_name='index_flask.html'), name='flask_upload'),
     path('pycore/', pycore_view, name='pycore'),
     path('perfil/', perfil, name='perfil'),
-    path('logout/', auth_logout, name='auth_logout'),  # Ruta para logout
+    path('cerrar-sesion/', cierre, name='cierre')
 
-<<<<<<< HEAD
+
 ]
-=======
-]
->>>>>>> refs/remotes/origin/main
