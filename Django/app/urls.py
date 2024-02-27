@@ -15,4 +15,8 @@ urlpatterns = [
     path('perfil/', perfil, name='perfil'),
     path('logout/', auth_logout, name='auth_logout'),  # Ruta para logout
 
+<<<<<<< HEAD
 ]
+=======
+]
+>>>>>>> refs/remotes/origin/main
