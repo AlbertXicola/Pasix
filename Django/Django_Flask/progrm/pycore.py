@@ -44,40 +44,15 @@ def obtener_resultados_virustotal(file_url):
     response = requests.get(file_url, headers=headers)
     return response
 
-@app.route('/')
-def index():
-    return render_template('pycore.html')
-
-@app.route('/upload', methods=['POST'])
-def upload_file():
-
-    if 'file' not in request.files:
-        return jsonify({'error': 'No se proporcionó el archivo'}), 400
-    
-    file = request.files['file']
-    # Asegurarse de que el directorio para analizar exista
-    if not os.path.exists(carpeta_Para_analizar):
-        os.makedirs(carpeta_Para_analizar)
-
-    # Guardar el archivo en la carpeta para analizar
-    archivo_path = os.path.abspath(os.path.join(carpeta_Para_analizar, file.filename))
-    file.save(archivo_path)
-
-    print(archivo_path)
-    # Mover el archivo a la carpeta de análisis
-    if os.path.exists(archivo_path):
-        shutil.move(archivo_path, os.path.join(carpeta_Para_analizar, file.filename))
-    
+def procesar_archivo(archivo_path):
     sha256_hash = calcular_sha256_hash(archivo_path)
-
     resultado = collection.find_one({"Nuestro Hash": sha256_hash})
 
     if resultado:
         resultado['_id'] = str(resultado['_id'])
-        return jsonify({'message': 'Datos encontrados en nuestra base de datos', 'data': resultado})
+        return {'message': 'Datos encontrados en nuestra base de datos', 'data': resultado}
 
     response = enviar_a_virustotal(archivo_path)
-
     time.sleep(20)
 
     if response.status_code == 200:
@@ -102,7 +77,7 @@ def upload_file():
                 mensaje_destino = 'Archivo infectado'
 
             data_to_insert = {
-                "Nombre Archivo": file.filename,
+                "Nombre Archivo": os.path.basename(archivo_path),
                 "Nuestro Hash": sha256_hash,
                 "id_API": vt_response["data"]["id"],
                 "Antivirus Detectados": malicious_segunda_solicitud,
@@ -112,26 +87,63 @@ def upload_file():
             result = collection.insert_one(data_to_insert)
             data_to_insert['_id'] = str(result.inserted_id)
 
-            if malicious_segunda_solicitud == 0:
-                destino = ruta_destino_Limpio
-            elif malicious_segunda_solicitud <= 5:
-                destino = ruta_destino_Cuarentena
-            elif malicious_segunda_solicitud > 5:
-                destino = ruta_destino_Malicioso
-
             if not os.path.exists(os.path.join(destino)):
                 os.makedirs(os.path.join(destino))
 
-            shutil.move(archivo_path, os.path.join(destino, file.filename))
+            shutil.move(archivo_path, os.path.join(destino, os.path.basename(archivo_path)))
 
             mensaje = f'Datos agregados a la base de datos.'
-            return jsonify({'message': mensaje, 'data': data_to_insert})
+            return {'message': mensaje, 'data': data_to_insert}
 
         else:
-            return jsonify({'error': 'Error al obtener resultados de VirusTotal con el self.'}), 500
+            return {'error': 'Error al obtener resultados de VirusTotal con el self.'}, 500
 
     else:
-        return jsonify({'error': 'Error al enviar el archivo a VirusTotal.'}), 500
+        return {'error': 'Error al enviar el archivo a VirusTotal.'}, 500
+
+def procesar_archivos_en_carpeta():
+    resultados = []
+    archivos_a_procesar = os.listdir(carpeta_Para_analizar)
+    
+    for archivo_a_procesar in archivos_a_procesar:
+        archivo_path = os.path.join(carpeta_Para_analizar, archivo_a_procesar)
+        resultado_procesamiento = procesar_archivo(archivo_path)
+        resultados.append(resultado_procesamiento)
+
+    return resultados
+
+@app.route('/')
+def index():
+    return render_template('pycore.html')
+
+@app.route('/upload', methods=['POST'])
+def upload_files():
+    if 'files[]' not in request.files:
+        return jsonify({'error': 'No se proporcionaron archivos'}), 400
+
+    archivos = request.files.getlist('files[]')
+
+    if not archivos:
+        return jsonify({'error': 'No se seleccionaron archivos válidos'}), 400
+
+    # Asegurarse de que el directorio para analizar exista
+    if not os.path.exists(carpeta_Para_analizar):
+        os.makedirs(carpeta_Para_analizar)
+
+    resultados = []  # Lista para almacenar resultados de los archivos subidos
+
+    for archivo in archivos:
+        archivo_path = os.path.abspath(os.path.join(carpeta_Para_analizar, archivo.filename))
+        archivo.save(archivo_path)
+
+        # Procesar el archivo y obtener el resultado específico
+        resultado_procesamiento = procesar_archivo(archivo_path)
+
+        # Agregar el resultado a la lista de resultados
+        resultados.append(resultado_procesamiento)
+
+    # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
+    return jsonify({'message': 'Carga exitosa', 'results': resultados}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
