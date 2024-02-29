@@ -1,11 +1,16 @@
 #!/bin/bash
 
-kill $(pgrep -f "python3 Django/manage.py runserver")
+echo -n "Introduce tu contraseña: "
+read -s password
+echo
 
-sleep 5
+pkill -f "python3 Django/manage.py runserver"
+pkill -f "python3 Django/Django_Flask/progrm/pycore.py"
 
-kill $(pgrep -f "sudo python3 Django/Django_Flask/progrm/pycore.py")
+deactivate 2>/dev/null
 
-sleep 5
+echo "$password" | sudo -S docker-compose down
 
-sudo docker-compose down
+echo "$password" | sudo -S rm -rf venv
+
+echo "Servicios apagados exitosamente."
