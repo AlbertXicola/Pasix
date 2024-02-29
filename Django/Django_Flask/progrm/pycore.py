@@ -53,7 +53,7 @@ def procesar_archivo(archivo_path):
         return {'message': 'Datos encontrados en nuestra base de datos', 'data': resultado}
 
     response = enviar_a_virustotal(archivo_path)
-    time.sleep(20)
+    time.sleep(15)
 
     if response.status_code == 200:
         vt_response = response.json()
