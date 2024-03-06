@@ -46,7 +46,7 @@ def obtener_resultados_virustotal(file_url):
 
 def procesar_archivo(archivo_path):
     sha256_hash = calcular_sha256_hash(archivo_path)
-    resultado = collection.find_one({"Nuestro Hash": sha256_hash})
+    resultado = collection.find_one({"Our_Hash": sha256_hash})
 
     if resultado:
         resultado['_id'] = str(resultado['_id'])
@@ -77,8 +77,8 @@ def procesar_archivo(archivo_path):
                 mensaje_destino = 'Archivo infectado'
 
             data_to_insert = {
-                "Nombre Archivo": os.path.basename(archivo_path),
-                "Nuestro Hash": sha256_hash,
+                "Nombre_Archivo": os.path.basename(archivo_path),
+                "Our_Hash": sha256_hash,
                 "id_API": vt_response["data"]["id"],
                 "Antivirus Detectados": malicious_segunda_solicitud,
                 "Prevision": mensaje_destino,
@@ -111,6 +111,13 @@ def procesar_archivos_en_carpeta():
         resultados.append(resultado_procesamiento)
 
     return resultados
+
+from flask import Flask, request, jsonify, render_template
+import os
+
+app = Flask(__name__)
+
+carpeta_Para_analizar = "ruta/a/tu/carpeta/para/analizar"
 
 @app.route('/upload', methods=['POST'])
 def upload_files():

@@ -11,7 +11,13 @@
     <h2>Resultados del análisis de archivos:</h2>
     <ul>
         {% for resultado in resultados %}
-            <li>{{ resultado.message }}</li>
+
+            <li>{{ resultado.data.id_API }}</li>
+            <li>{{ resultado.data.Nombre_Archivo }}</li>
+            <li>{{ resultado.data.Our_Hash }}</li>
+            <li>{{ resultado.data.Maldades }}</li>
+            <li>{{ resultado.data.Prevision }}</li>
+
         {% endfor %}
     </ul>
 </body>
