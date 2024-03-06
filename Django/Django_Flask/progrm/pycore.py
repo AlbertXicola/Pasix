@@ -80,7 +80,7 @@ def procesar_archivo(archivo_path):
                 "Nombre_Archivo": os.path.basename(archivo_path),
                 "Our_Hash": sha256_hash,
                 "id_API": vt_response["data"]["id"],
-                "Antivirus Detectados": malicious_segunda_solicitud,
+                "Maldades": malicious_segunda_solicitud,
                 "Prevision": mensaje_destino,
             }
 
