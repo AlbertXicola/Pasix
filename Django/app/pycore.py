@@ -1,29 +1,34 @@
-from flask import Flask, render_template, request, jsonify
-import hashlib
 import os
-import requests
-import pymongo
-import time
 import shutil
-from bson import ObjectId
+import time
+from hashlib import sha256
+from urllib.parse import urlencode
+import requests
+from django.conf import settings
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from pymongo import MongoClient
+from django.conf import settings
 
-app = Flask(__name__)
-
-carpeta_Para_analizar = "Para_Analizar"
-ruta_destino_Limpio = "Finalizado/Limpio"
-ruta_destino_Cuarentena = "Finalizado/Cuarentena"
-ruta_destino_Malicioso = "Finalizado/Malicioso"
+app_name = settings.APP_NAME
 
 # Conexión a MongoDB
-client = pymongo.MongoClient("mongodb://pasix:20Logicalis21@127.0.0.1:27017/")
+client = MongoClient("mongodb://pasix:20Logicalis21@127.0.0.1:27017/")
 db = client["Proyecto"]
 collection = db["Archivos"]
 
 api_key = "2f047d42c57a702fd720dd049e5d7f8d24baf8811faf42d34226e703be6270a9"
 base_url = "https://www.virustotal.com/api/v3"
 
+carpeta_Para_analizar = "Para_Analizar"
+ruta_destino_Limpio = "Finalizado/Limpio"
+ruta_destino_Cuarentena = "Finalizado/Cuarentena"
+ruta_destino_Malicioso = "Finalizado/Malicioso"
+
+
 def calcular_sha256_hash(file_path):
-    sha256_hash = hashlib.sha256()
+    sha256_hash = sha256()
     with open(file_path, "rb") as file:
         while True:
             data = file.read(65536)
@@ -32,6 +37,7 @@ def calcular_sha256_hash(file_path):
             sha256_hash.update(data)
     return sha256_hash.hexdigest()
 
+
 def enviar_a_virustotal(file_path):
     url = f"{base_url}/files"
     headers = {"x-apikey": api_key}
@@ -39,10 +45,12 @@ def enviar_a_virustotal(file_path):
     response = requests.post(url, files=files, headers=headers)
     return response
 
+
 def obtener_resultados_virustotal(file_url):
     headers = {"x-apikey": api_key}
     response = requests.get(file_url, headers=headers)
     return response
+
 
 def procesar_archivo(archivo_path):
     sha256_hash = calcular_sha256_hash(archivo_path)
@@ -63,9 +71,9 @@ def procesar_archivo(archivo_path):
 
         if response2.status_code == 200:
             vt_response2 = response2.json()
-            last_analysis_stats = vt_response2.get("data", {}).get("attributes", {}).get("stats", {}).get("malicious", 0)
+            last_analysis_stats = vt_response2.get("data", {}).get("attributes", {}).get("stats", {}).get("malicious",0)
             malicious_segunda_solicitud = last_analysis_stats
-            
+
             if malicious_segunda_solicitud == 0:
                 destino = ruta_destino_Limpio
                 mensaje_destino = 'Archivo limpio'
@@ -101,10 +109,11 @@ def procesar_archivo(archivo_path):
     else:
         return {'error': 'Error al enviar el archivo a VirusTotal.'}, 500
 
+
 def procesar_archivos_en_carpeta():
     resultados = []
     archivos_a_procesar = os.listdir(carpeta_Para_analizar)
-    
+
     for archivo_a_procesar in archivos_a_procesar:
         archivo_path = os.path.join(carpeta_Para_analizar, archivo_a_procesar)
         resultado_procesamiento = procesar_archivo(archivo_path)
@@ -112,43 +121,39 @@ def procesar_archivos_en_carpeta():
 
     return resultados
 
-from flask import Flask, request, jsonify, render_template
-import os
 
-app = Flask(__name__)
+@csrf_exempt
+def upload_files(request):
+    if request.method == 'POST':
+        archivos = request.FILES.getlist('files[]')
 
-carpeta_Para_analizar = "ruta/a/tu/carpeta/para/analizar"
+        if not archivos:
+            return JsonResponse({'error': 'No se seleccionaron archivos válidos'}, status=400)
 
-@app.route('/upload', methods=['POST'])
-def upload_files():
-    if 'files[]' not in request.files:
-        return jsonify({'error': 'No se proporcionaron archivos'}), 400
+        # Asegurarse de que el directorio para analizar exista
+        if not os.path.exists(carpeta_Para_analizar):
+            os.makedirs(carpeta_Para_analizar)
 
-    archivos = request.files.getlist('files[]')
+        resultados = []  # Lista para almacenar resultados de los archivos subidos
 
-    if not archivos:
-        return jsonify({'error': 'No se seleccionaron archivos válidos'}), 400
+        for archivo in archivos:
+            archivo_path = os.path.abspath(os.path.join(carpeta_Para_analizar, archivo.name))
+            print("Ruta del archivo:", archivo_path)  # Agregar esta línea para imprimir la ruta del archivo
+            with open(archivo_path, 'wb') as destination:
+                for chunk in archivo.chunks():
+                    destination.write(chunk)
 
-    # Asegurarse de que el directorio para analizar exista
-    if not os.path.exists(carpeta_Para_analizar):
-        os.makedirs(carpeta_Para_analizar)
+            # Procesar el archivo y obtener el resultado específico
+            resultado_procesamiento = procesar_archivo(archivo_path)
+            print("Resultado del procesamiento:", resultado_procesamiento)  # Agregar esta línea para imprimir el resultado del procesamiento
 
-    resultados = []  # Lista para almacenar resultados de los archivos subidos
+            # Agregar el resultado a la lista de resultados
+            resultados.append(resultado_procesamiento)
+        print(resultados)
 
-    for archivo in archivos:
-        archivo_path = os.path.abspath(os.path.join(carpeta_Para_analizar, archivo.filename))
-        archivo.save(archivo_path)
+        # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
+        return JsonResponse({'message': 'Carga exitosa', 'resultados': resultados})
 
-        # Procesar el archivo y obtener el resultado específico
-        resultado_procesamiento = procesar_archivo(archivo_path)
 
-        # Agregar el resultado a la lista de resultados
-        resultados.append(resultado_procesamiento)
 
-    # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
-    print(resultados[0].get("data", {}))
-    # En lugar de devolver JSON, renderiza un template de Django
-    return render_template('test.html', message='Carga exitosa', resultados=resultados)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)

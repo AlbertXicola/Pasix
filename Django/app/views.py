@@ -13,8 +13,7 @@ import os
 def home(request):
     return render(request, 'app/home.html')
 
-def archivos(request):
-    return render(request, 'app/archivos.html')
+
     
 
 def cierre(request):
@@ -88,9 +87,29 @@ def user_view(request):
 
 
 def pycore_view(request):
-    return render(request, 'pycore.html')
+    return render(request, 'registration/pycore.html')
 
 def test(request):
-    return render(request, 'test.html')
+    return render(request, 'registration/test.html')
 
 
+from .pycore import *
+from django.http import JsonResponse
+
+
+
+@csrf_exempt
+
+
+
+def archivos(request):
+    if request.method == 'POST':
+        resultados = procesar_archivos_en_carpeta()
+        if resultados:
+            print(resultados[0].get("data", {}))
+        else:
+            print("La lista de resultados está vacía.")
+
+        return JsonResponse({'message': 'Carga exitosa', 'resultados': resultados})
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)

@@ -1,9 +1,59 @@
-
 {% extends 'app/user.html' %}
 {% load static %}
-
 {% block contenido %}
 
+<style>
 
+    body {
+        font-family: Arial, sans-serif; /* Establecer la fuente del cuerpo */
+      }
+      .recuadro {
+        width: 2000px; /* Ancho del recuadro */
+        height: 900px; /* Altura del recuadro */
+        background-color: #313131; /* Color de fondo gris */
+        border: 1px solid #000000; /* Borde del recuadro */
+        padding: 10px; /* Espacio interno del recuadro */
+        position: relative; /* Para posicionar el contenido dentro del recuadro */
+        margin: 10px; /* Margen entre recuadros */
+      }
+      
+    
+      .recuadro-interno {
+        width: 25%; /* Ancho del recuadro interno */
+        height: 25%; /* Altura del recuadro interno */
+        background-color: #5f5f5f; /* Color de fondo gris claro */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start; /* Alineación a la izquierda */
+        text-align: left; /* Alineación del texto a la izquierda */
+        padding: 10px; /* Espaciado interno */
+        margin: 20px;
+      }
+      .texto-grande {
+        color: #111111; /* Color de texto blanco */
+        font-size: 18px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+      }
+    
+      .texto-pequeno {
+        color: #000000; /* Color de texto blanco */
+        font-size: 14px; /* Tamaño de fuente pequeño */
+      }
+    </style>
+<h2>Resultados del análisis de archivos:</h2>
+
+
+<div class="recuadro">
+    {% for resultado in resultados %}
+    <div class="recuadro-interno">
+        <div class="texto-grande">Nombre del Archivo: {{ resultado.data.Nombre_Archivo }}</div>
+        <div class="texto-pequeno">Identificación API:  {{ resultado.data.id_API }}</div>
+        <div class="texto-pequeno">Identificador Archivo APIB2:   {{ resultado.data.Our_Hash }}</div>
+        <div class="texto-pequeno">Maldades Detectadas:   {{ resultado.data.Maldades }}</div>
+        <div class="texto-pequeno">Previsión:   {{ resultado.data.Prevision }}</div>
+    </div>
+    {% endfor %}
+</div>
     
 {% endblock %}

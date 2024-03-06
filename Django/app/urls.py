@@ -14,7 +14,8 @@ urlpatterns = [
     path('pycore/', pycore_view, name='pycore'),
     path('perfil/', perfil, name='perfil'),
     path('cerrar-sesion/', cierre, name='cierre'),
-    path('archivos/', archivos, name='archivos'),
     path('test/', test, name='test'),
+    path('archivos/', archivos, name='archivos'),
+
 
 ]

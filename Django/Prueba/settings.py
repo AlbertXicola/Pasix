@@ -50,6 +50,7 @@ LOGIN_REDIRECT_URL = "/user/"
 LOGOUT_REDIRECT_URL = "logout/"
 
 X_FRAME_OPTIONS='SAMEORIGIN'
+APP_NAME = 'app'
 
 
 APPEND_SLASH=False
@@ -69,7 +70,7 @@ ROOT_URLCONF = 'Prueba.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['Django/Django_Flask/progrm/templates'],
+        'DIRS': ['Django/'],
 
         'APP_DIRS': True,
         'OPTIONS': {
@@ -93,6 +94,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'mongodb': {
+        'ENGINE': 'djongo',
+        'NAME': 'Proyecto',  # Nombre de tu base de datos en MongoDB
+        'CLIENT': {
+            'host': '127.0.0.1',  # Dirección IP del servidor MongoDB
+            'port': 27017,  # Puerto en el que MongoDB está escuchando conexiones
+            'username': 'pasix',  # Usuario de autenticación de MongoDB
+            'password': '20Logicalis21',  # Contraseña de autenticación de MongoDB
+            'authSource': 'admin',  # Base de datos de autenticación (por defecto, 'admin')
+            # 'authMechanism': 'SCRAM-SHA-1',  # Mecanismo de autenticación (no es necesario si está utilizando las últimas versiones de MongoDB)
+        }  
     }
 }
 
