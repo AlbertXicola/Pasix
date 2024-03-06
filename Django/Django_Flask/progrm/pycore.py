@@ -112,10 +112,6 @@ def procesar_archivos_en_carpeta():
 
     return resultados
 
-@app.route('/')
-def index():
-    return render_template('pycore.html')
-
 @app.route('/upload', methods=['POST'])
 def upload_files():
     if 'files[]' not in request.files:
@@ -143,8 +139,9 @@ def upload_files():
         resultados.append(resultado_procesamiento)
 
     # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
-    return jsonify({'message': 'Carga exitosa', 'results': resultados}), 200
+    print(resultados[0].get("data", {}))
+    # En lugar de devolver JSON, renderiza un template de Django
+    return render_template('test.html', message='Carga exitosa', resultados=resultados)
 
 if __name__ == '__main__':
     app.run(debug=True)
-    client.close()

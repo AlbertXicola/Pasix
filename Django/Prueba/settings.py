@@ -52,6 +52,7 @@ LOGOUT_REDIRECT_URL = "logout/"
 X_FRAME_OPTIONS='SAMEORIGIN'
 
 
+APPEND_SLASH=False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
