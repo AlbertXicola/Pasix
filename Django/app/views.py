@@ -99,17 +99,41 @@ from django.http import JsonResponse
 
 
 @csrf_exempt
+@login_required
+def analisis(request):
+    if request.method == 'POST':
+        archivos = request.FILES.getlist('files[]')
+
+        if not archivos:
+            return render(request, 'registration/pycore.html', {'message_select': 'Archivo Erroneo o No se ha selccionado Archivo'})
 
 
+        # Asegurarse de que el directorio para analizar exista
+        if not os.path.exists(carpeta_Para_analizar):
+            os.makedirs(carpeta_Para_analizar)
+
+        resultados = []  # Lista para almacenar resultados de los archivos subidos
+
+        for archivo in archivos:
+            archivo_path = os.path.abspath(os.path.join(carpeta_Para_analizar, archivo.name))
+            print("Ruta del archivo:", archivo_path)  # Agregar esta línea para imprimir la ruta del archivo
+            with open(archivo_path, 'wb') as destination:
+                for chunk in archivo.chunks():
+                    destination.write(chunk)
+
+            # Procesar el archivo y obtener el resultado específico
+            resultado_procesamiento = procesar_archivo(archivo_path)
+            print("Resultado del procesamiento:", resultado_procesamiento)  # Agregar esta línea para imprimir el resultado del procesamiento
+
+            # Agregar el resultado a la lista de resultados
+            resultados.append(resultado_procesamiento)
+
+        print(resultados)
+
+        # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
+        return render(request, 'app/analisis.html', {'message': 'Carga exitosa', 'resultados': resultados})
+
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 def archivos(request):
-    if request.method == 'POST':
-        resultados = procesar_archivos_en_carpeta()
-        if resultados:
-            print(resultados[0].get("data", {}))
-        else:
-            print("La lista de resultados está vacía.")
-
-        return JsonResponse({'message': 'Carga exitosa', 'resultados': resultados})
-    else:
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    return render(request, 'app/archivos.html')

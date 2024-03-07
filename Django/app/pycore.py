@@ -123,6 +123,7 @@ def procesar_archivos_en_carpeta():
 
 
 @csrf_exempt
+
 def upload_files(request):
     if request.method == 'POST':
         archivos = request.FILES.getlist('files[]')
@@ -149,10 +150,11 @@ def upload_files(request):
 
             # Agregar el resultado a la lista de resultados
             resultados.append(resultado_procesamiento)
+
         print(resultados)
 
         # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
-        return JsonResponse({'message': 'Carga exitosa', 'resultados': resultados})
+        return render(request, 'app/analisis.html', {'message': 'Carga exitosa', 'resultados': resultados})
 
 
 

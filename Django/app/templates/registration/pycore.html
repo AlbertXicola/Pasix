@@ -84,30 +84,39 @@
         margin-top: 20px; /* Ajusta el margen superior según tus necesidades */
         margin-right: 20px; /* Ajusta el margen derecho según tus necesidades */
     }
+    .buenas {
+        color: #d4d4d4;
+        font-size: 15px;
+        margin-left: 815px;
+        margin-top: 30px;
+
+    }
 </style>
 
 
+<div class="upload-container pycore-container">
+    <span class="icon-close">
+        <ion-icon name="close-outline"></ion-icon>
+    </span>
 
-    <div class="upload-container pycore-container">
-        <span class="icon-close">
-            <ion-icon name="close-outline"></ion-icon>
-        </span>
+    <form action="{% url 'analisis' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file-upload" class="custom-file-upload">Seleccionar Archivos</label>
+        <span id="file-upload-label">    </span>
+        <input type="file" id="file-upload" name="files[]" accept=".txt, .pdf, .doc, .docx" multiple>
+        <input id="subir-archivo" type="submit" value="Subir Archivos">
+    </form>
+    {% if message_select %}
+        <h1 class="buenas">{{ message_select }}</h1>
+    {% endif %}
+</div>
 
-        <form action="{% url 'archivos' %}" method="post">
-            {% csrf_token %}
-            <label for="file-upload" class="custom-file-upload">Seleccionar Archivos</label>
-            <span id="file-upload-label">Ningún archivo seleccionado</span>
-            <input type="file" id="file-upload" name="files[]" accept=".txt, .pdf, .doc, .docx" multiple>
-            <input id="subir-archivo" type="submit" value="Subir Archivos">
-        </form>
-        
-    </div>
+<script>
+    document.getElementById('file-upload').addEventListener('change', function() {
+        const fileCount = this.files.length;
+        const label = fileCount === 1 ? this.files[0].name : `${fileCount} archivos seleccionados`;
+        document.getElementById('file-upload-label').innerText = label;
+    });
+</script>
 
-    <script>
-        document.getElementById('file-upload').addEventListener('change', function() {
-            const fileCount = this.files.length;
-            const label = fileCount === 1 ? this.files[0].name : `${fileCount} archivos seleccionados`;
-            document.getElementById('file-upload-label').innerText = label;
-        });
-    </script>
 {% endblock %}

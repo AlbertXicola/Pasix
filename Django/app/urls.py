@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, contacto, galeria, registro, olvidada, terminos, user_view, pycore_view, perfil, cierre, archivos, test
+from .views import home, contacto, galeria, registro, olvidada, terminos, user_view, pycore_view, perfil, cierre, archivos, analisis
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -14,8 +14,11 @@ urlpatterns = [
     path('pycore/', pycore_view, name='pycore'),
     path('perfil/', perfil, name='perfil'),
     path('cerrar-sesion/', cierre, name='cierre'),
-    path('test/', test, name='test'),
+
+
     path('archivos/', archivos, name='archivos'),
+    path('analisis/', analisis, name='analisis'),
+
 
 
 ]
