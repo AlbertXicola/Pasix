@@ -7,25 +7,28 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 import os
+from .pycore import *
+from django.http import JsonResponse
+import pymongo
+from .models import Fichero
 
 
+
+def cierre(request):
+    logout(request)
+    return redirect('home')
 
 def home(request):
     return render(request, 'app/home.html')
 
+def pycore_view(request):
+    return render(request, 'registration/pycore.html')
 
-    
+def test(request):
+    return render(request, 'registration/test.html')
 
-def cierre(request):
-    logout(request)  # Cierra la sesión del usuario
-    return redirect('home')  # Redirige a la página de inicio (asumiendo que 'home' es el nombre de la URL para la página de inicio)
-
-# Create your views here.
-# @permission_required('app.add_galeria')EJEMPLoooooooooooooooooooooooo
 def galeria(request):
     return render(request, 'app/galeria.html')
-
-# Create your views here.
 
 def olvidada(request):
     return render(request, 'app/olvidada.html')
@@ -33,9 +36,12 @@ def olvidada(request):
 def terminos(request):
     return render(request, 'app/terminos.html')
 
-
 def perfil(request):
     return render(request, 'app/perfil.html')
+
+def archivos(request):
+    return render(request, 'app/archivos.html')
+
 
 
 def contacto(request):
@@ -54,7 +60,7 @@ def contacto(request):
 
 
     return render(request, 'app/contacto.html', data)
-# Create your views here.
+
 
 
 def registro(request):
@@ -86,54 +92,62 @@ def user_view(request):
 
 
 
-def pycore_view(request):
-    return render(request, 'registration/pycore.html')
-
-def test(request):
-    return render(request, 'registration/test.html')
-
-
-from .pycore import *
-from django.http import JsonResponse
-
-
 
 @csrf_exempt
 @login_required
+
+
+
 def analisis(request):
     if request.method == 'POST':
         archivos = request.FILES.getlist('files[]')
 
         if not archivos:
-            return render(request, 'registration/pycore.html', {'message_select': 'Archivo Erroneo o No se ha selccionado Archivo'})
+            return render(request, 'registration/pycore.html', {'message_select': 'Archivo Erroneo o No se ha seleccionado Archivo'})
 
-
-        # Asegurarse de que el directorio para analizar exista
-        if not os.path.exists(carpeta_Para_analizar):
+        if not os.path.exists(carpeta_Para_analizar):  # Asegurarse de que el directorio para analizar exista
             os.makedirs(carpeta_Para_analizar)
 
         resultados = []  # Lista para almacenar resultados de los archivos subidos
 
         for archivo in archivos:
             archivo_path = os.path.abspath(os.path.join(carpeta_Para_analizar, archivo.name))
-            print("Ruta del archivo:", archivo_path)  # Agregar esta línea para imprimir la ruta del archivo
+            # print("Ruta del archivo:", archivo_path)  # Agregar esta línea para imprimir la ruta del archivo
             with open(archivo_path, 'wb') as destination:
                 for chunk in archivo.chunks():
                     destination.write(chunk)
 
-            # Procesar el archivo y obtener el resultado específico
-            resultado_procesamiento = procesar_archivo(archivo_path)
-            print("Resultado del procesamiento:", resultado_procesamiento)  # Agregar esta línea para imprimir el resultado del procesamiento
+            resultado_procesamiento = procesar_archivo(archivo_path)  # Procesar el archivo y obtener el resultado específico
+            # print("Resultado del procesamiento:", resultado_procesamiento)  # Agregar esta línea para imprimir el resultado del procesamiento
+            resultados.append(resultado_procesamiento)  # Agregar el resultado a la lista de resultados
 
-            # Agregar el resultado a la lista de resultados
-            resultados.append(resultado_procesamiento)
+            # Autenticación en MongoDB
+            client = MongoClient("mongodb://pasix:20Logicalis21@127.0.0.1:27017/")
+            db = client["Proyecto"]
+            collection = db["Archivos"]
 
-        print(resultados)
+            # Buscar el documento asociado al nombre del archivo
+            documento = collection.find_one({"Nombre_Archivo": archivo.name})
+            if documento:
+                id_archivo = documento["_id"]
+                print (id_archivo)
+            
+            if request.user.is_authenticated:
+                id_usuario = request.user.id
+            
+            fichero = Fichero(id_archivo=id_archivo, id_usuario=id_usuario)
+            fichero.save()
 
-        # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
+        
+
         return render(request, 'app/analisis.html', {'message': 'Carga exitosa', 'resultados': resultados})
 
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-def archivos(request):
-    return render(request, 'app/archivos.html')
+
+from django.shortcuts import render
+from .models import Fichero
+
+def mi_vista(request):
+    fichero = Fichero.objects.first()  # Ejemplo: selecciona el primer objeto de la tabla Fichero
+    return render(request, 'app/ficheros.html', {'fichero': fichero})

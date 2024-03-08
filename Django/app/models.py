@@ -1,7 +1,7 @@
 from django.db import models
 
 OPCIONES_CONSULTAS = [
-    (0, "ㅤ"),
+    (0, "ㅤSeleccionar"),
     (1, "ㅤSugerencias"),
     (2, "ㅤAyuda"),
     (3, "ㅤReportes"),
@@ -16,5 +16,16 @@ class Contacto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+
+class Fichero(models.Model):
+    id_usuario = models.IntegerField(unique=True)
+    id_archivo = models.CharField(max_length=255)  #habria que mirar que esto sea unico
+
+    def __str__(self):
+        return f"ID_Archivo_Mongo: {self.id_archivo}, ID_Usuario: {self.id_usuario}"
+
+
 
 

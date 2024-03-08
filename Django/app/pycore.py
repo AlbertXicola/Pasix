@@ -151,7 +151,6 @@ def upload_files(request):
             # Agregar el resultado a la lista de resultados
             resultados.append(resultado_procesamiento)
 
-        print(resultados)
 
         # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
         return render(request, 'app/analisis.html', {'message': 'Carga exitosa', 'resultados': resultados})

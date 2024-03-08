@@ -77,13 +77,14 @@
       <div class="texto-pequeno">{{ resultado.data.Our_Hash }}</div>
 
       {% if resultado.data.Maldades == 0 %}
-      <div class="texto-grande verde">Maldades Detectadas:</div>
+      <div class="texto-grande verde">Anomalias Detectadas:</div>
       {% elif resultado.data.Maldades >= 1 and resultado.data.Maldades <= 5 %}
       <div class="texto-grande amarillo">Maldades Detectadas:</div>
       {% elif resultado.data.Maldades >= 6 and resultado.data.Maldades <= 1000 %}
       <div class="texto-grande rojo">Maldades Detectadas:</div>
       {% endif %}
       <div class="texto-pequeno">{{ resultado.data.Maldades }}</div>
+      
 
       
     <div class="texto-grande">Previsión:</div>
