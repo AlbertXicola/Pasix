@@ -20,7 +20,7 @@ class Contacto(models.Model):
 
 
 class Fichero(models.Model):
-    id_usuario = models.IntegerField(unique=True)
+    id_usuario = models.IntegerField(unique=False)
     id_archivo = models.CharField(max_length=255)  #habria que mirar que esto sea unico
 
     def __str__(self):

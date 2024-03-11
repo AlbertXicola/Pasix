@@ -40,7 +40,8 @@ def perfil(request):
     return render(request, 'app/perfil.html')
 
 def archivos(request):
-    return render(request, 'app/archivos.html')
+    ficheros = Fichero.objects.filter(id_usuario = request.user.id)  # Ejemplo: selecciona el primer objeto de la tabla Fichero
+    return render(request, 'app/archivos.html', {'ficheros': ficheros})
 
 
 
@@ -144,10 +145,4 @@ def analisis(request):
 
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-
-from django.shortcuts import render
-from .models import Fichero
-
-def mi_vista(request):
-    fichero = Fichero.objects.first()  # Ejemplo: selecciona el primer objeto de la tabla Fichero
-    return render(request, 'app/ficheros.html', {'fichero': fichero})
+    
