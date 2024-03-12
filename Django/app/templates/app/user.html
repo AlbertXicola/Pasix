@@ -24,7 +24,11 @@
             <!-- <a href="#">Configuración</a> -->
             <a href="{% url 'pycore' %}">Analisis</a>
             <a href="{% url 'archivos' %}">Archivos</a>
+            {% if user.is_staff %}
+            <a href="{% url 'admin:index' %}">Panel admin</a>
+            {% endif %}
             <a href="{% url 'cierre' %}">Cerrar Sesión</a>
+
 
         </nav>
 
