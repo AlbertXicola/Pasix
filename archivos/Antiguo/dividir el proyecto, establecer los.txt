@@ -1,1 +1,0 @@
-dividir el proyecto, establecer los valores, de las bases de datos, que cada uno toque lo suyo.
