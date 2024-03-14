@@ -10,7 +10,9 @@ import os
 from .pycore import *
 from django.http import JsonResponse
 import pymongo
+from bson.objectid import ObjectId
 from .models import Fichero
+import datetime
 
 
 
@@ -131,7 +133,7 @@ def analisis(request):
             documento = collection.find_one({"Nombre_Archivo": archivo.name})
             if documento:
                 id_archivo = documento["_id"]
-                print (id_archivo)
+                #print (id_archivo)
             
             if request.user.is_authenticated:
                 id_usuario = request.user.id
@@ -146,3 +148,51 @@ def analisis(request):
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
     
+
+
+
+def archivos(request):
+
+
+    client = MongoClient("mongodb://pasix:20Logicalis21@127.0.0.1:27017/")
+    db = client["Proyecto"]
+    collection = db["Archivos"]
+
+
+    id_usuario_actual = request.user.id
+    django_data = Fichero.objects.filter(id_usuario=id_usuario_actual)
+
+
+
+    now = "dater"
+    nombre_usuario = request.user.username
+    id_usuario = request.user.id
+
+
+    #print("=======================================")
+    #print(f"Archivos del usuario @{nombre_usuario} con ID = {id_usuario}:")
+    #print("=======================================")
+
+    archivos_data = []
+    for fichero in django_data:
+        ficheros_mongo = collection.find({"_id": ObjectId(fichero.id_archivo)})
+        for fichero_mongo in ficheros_mongo:
+            nombre_archivo = fichero_mongo.get('Nombre_Archivo')
+            Anomalias = fichero_mongo.get('Maldades')
+            Estado = fichero_mongo.get('Prevision')
+            archivos_data.append({
+                'nombre_archivo': nombre_archivo,
+                'anomalias': Anomalias,
+                'prevision': Estado,
+            })
+
+    now = datetime.datetime.now()  
+
+    context = {
+        'archivos_data': archivos_data,
+        'now': now,
+        'nombre_usuario': nombre_usuario,
+        'id_usuario': id_usuario
+    }
+
+    return render(request, 'app/archivos.html', context)

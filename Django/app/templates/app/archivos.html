@@ -44,13 +44,15 @@
 
       .texto-grande {
         color: #ffffff; /* Color de texto blanco */
-        font-size: 13px; /* Tamaño de fuente grande */
+        font-size: 16px; /* Tamaño de fuente grande */
         font-weight: bold; /* Texto en negrita */
       }
 
       .texto-pequeno {
         color: #000000; /* Color de texto blanco */
-        font-size: 10px; /* Tamaño de fuente pequeño */
+        font-size: 15px; /* Tamaño de fuente pequeño */
+        font-weight: bold; /* Texto en negrita */
+
       }
       .verde {
         color: rgb(31, 250, 60); /* Cambiar el color del texto a azul */
@@ -67,21 +69,17 @@
 
 <div class="recuadro">
 
-    {% for fichero in ficheros %}
-
+  
+  {% for archivo in archivos_data %}
     <div class="recuadro-interno">
-
-
-      <div class="texto-grande">ID Archivo:</div>
-      <div class="texto-pequeno">{{ fichero.id_archivo }}</div>
-
-      <div class="texto-grande">ID Usuario:</div>
-      <div class="texto-pequeno">{{ fichero.id_usuario }}</div>
-
-
+      <div class="texto-grande">Nombre del Archivo:</div>
+      <div class="texto-pequeno">{{ archivo.nombre_archivo }}</div>
+      <div class="texto-grande">Anomalias Detectadas:</div>
+      <div class="texto-pequeno">{{ archivo.anomalias }}</div>
+      <div class="texto-grande">Estado de el Archivo:</div>
+      <div class="texto-pequeno">{{ archivo.prevision }}</div>
     </div>
-    {% endfor %}
 
+  {% endfor %}
 </div>
-    
 {% endblock %}
