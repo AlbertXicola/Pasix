@@ -27,5 +27,15 @@ class Fichero(models.Model):
         return f"ID_Archivo_Mongo: {self.id_archivo}, ID_Usuario: {self.id_usuario}"
 
 
+class Compartidos(models.Model):
+    id_usuario = models.IntegerField(unique=False)
+    id_ucompartido = models.IntegerField(unique=False)
+    id_archivo = models.CharField(max_length=255)
+
+    
+    def __str__(self):
+        return f"Ficheros compartidos por: {self.id_usuario}"
+
+
 
 

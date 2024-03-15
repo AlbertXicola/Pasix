@@ -196,3 +196,18 @@ def archivos(request):
     }
 
     return render(request, 'app/archivos.html', context)
+
+def eliminar_archivo(request, archivo_id):
+    if request.method == 'POST':
+        try:
+            # Eliminar el archivo de Django
+            Fichero.objects.filter(id_archivo=archivo_id).delete()
+
+            messages.success(request, 'El archivo ha sido eliminado correctamente.')
+            return redirect('archivos')  # Redirigir a la página de archivos
+        except Exception as e:
+            messages.error(request, f'Ocurrió un error al eliminar el archivo: {e}')
+            return redirect('archivos')  # Redirigir a la página de archivos
+
+    # Si se intenta acceder a la URL de eliminación directamente por GET, redirigir a la página de archivos
+    return redirect('archivos', )
