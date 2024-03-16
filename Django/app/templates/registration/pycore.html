@@ -133,7 +133,24 @@
     .holas{
         padding-left: 20px;
     }
+
+    .achedos {
+        color: #ffffff; /* Color de texto blanco */
+        font-size: 30px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+        margin-left: 30px;
+        margin-bottom: 50px;
+      }
+    .lica{
+        color: #ffffff; /* Color de texto blanco */
+        font-size: 20px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+        margin-left: 40px;
+        margin-bottom: 5px;
+    }
+ 
 </style>
+
 
 
 <div class="upload-container pycore-container">
@@ -151,6 +168,12 @@
     {% if message_select %}
         <h1 class="buenas">{{ message_select }}</h1>
     {% endif %}
+    <h2 class="achedos">Analiza Archivos!</h2>
+    <li class="lica" >Esto es APBI2 tu analizador de confianza.</li>
+    <li class="lica" >Selecciona entre 1 y 4 archivos, y dale a analizar.</li>
+    <li class="lica" >Puede tardar como mucho 1 minuto en analizar hasta 4 archivos a la vez.</li>
+    <li class="lica" >Si tienes suerte ya estrará en nuestra Base de datos y será instantaneao.</li>
+    <li class="lica" >Recuerda que solo se pueden suvir archivos, carpetas no comprimidas y similares.</li>
 </div>
 
 <div id="overlay">

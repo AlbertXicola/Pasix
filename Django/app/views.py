@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect
-# from .models import Producto
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import ContactoForm, CustomUserCreationForm
 from django.contrib.auth.forms import UserCreationForm
@@ -13,8 +12,7 @@ import pymongo
 from bson.objectid import ObjectId
 from .models import Fichero
 import datetime
-
-
+from django.http import HttpResponse, FileResponse
 
 
 def cierre(request):
@@ -211,10 +209,6 @@ def archivos(request):
 
 
 
-from django.http import HttpResponse, FileResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Fichero
-
 def eliminar_fichero(request, fichero_id):
     fichero = get_object_or_404(Fichero, id=fichero_id)
     fichero.delete()
@@ -253,3 +247,5 @@ def descargar_archivo(request, nombre_archivo):
     else:
         # Si el archivo no existe, devolver un error 404
         return HttpResponse(status=404)
+    
+

@@ -19,15 +19,16 @@
         </header>
 
         <nav>
-            <a href="{% url 'home' %}">Menú Principal</a>
+            <a href="{% url 'usuario' %}">Usuario</a>
             <!-- <a href="{% url 'perfil' %}">Perfil</a> -->
             <!-- <a href="#">Configuración</a> -->
             <a href="{% url 'pycore' %}">Analisis</a>
-            <a href="{% url 'archivos' %}">Archivos</a>
+            <a href="{% url 'archivos' %}">Mis Archivos</a>
             {% if user.is_staff %}
             <a href="{% url 'admin:index' %}">Panel admin</a>
             {% endif %}
-            <a href="{% url 'usuario' %}">Usuario</a>
+            
+            <a href="{% url 'home' %}">Menú Principal</a>
             <a href="{% url 'cierre' %}">Cerrar Sesión</a>
 
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, contacto, galeria, registro, olvidada, terminos, user_view, pycore_view, descargar_archivo, perfil, cierre, archivos, analisis, usuario, eliminar_fichero
+from .views import home, contacto, galeria, registro, olvidada, terminos, user_view, pycore_view, descargar_archivo, perfil ,cierre, archivos, analisis, usuario, eliminar_fichero
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -19,6 +19,7 @@ urlpatterns = [
 
     path('eliminar/<int:fichero_id>/', eliminar_fichero, name='eliminar_fichero'),
     path('descargar/<str:nombre_archivo>/', descargar_archivo, name='descargar_archivo'),
+
 
 
     path('archivos/', archivos, name='archivos'),
