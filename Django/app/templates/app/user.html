@@ -19,7 +19,7 @@
         </header>
 
         <nav>
-            <a href="{% url 'home' %}">Inicio</a>
+            <a href="{% url 'home' %}">Menú Principal</a>
             <!-- <a href="{% url 'perfil' %}">Perfil</a> -->
             <!-- <a href="#">Configuración</a> -->
             <a href="{% url 'pycore' %}">Analisis</a>
@@ -27,6 +27,7 @@
             {% if user.is_staff %}
             <a href="{% url 'admin:index' %}">Panel admin</a>
             {% endif %}
+            <a href="{% url 'usuario' %}">Usuario</a>
             <a href="{% url 'cierre' %}">Cerrar Sesión</a>
 
 

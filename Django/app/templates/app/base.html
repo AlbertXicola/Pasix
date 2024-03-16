@@ -17,14 +17,17 @@
 <body background="{% static '/app/img/fondo5.png' %}";>
     
     <header>
-        <h2 class="logo">APBI2</h2>
+        
+        <a class="logo" href="{% url 'home' %}" >APBI2</a>
+        
         <nav class="navigation">
             <a href="{% url 'home' %}">Inicio</a>
             <a href="{% url 'galeria' %}">Galeria</a>
             <a href="{% url 'contacto' %}">Contacta</a>
             {% if user.is_authenticated %}
+                
+                <a href="{% url 'usuario' %}">Panel de Usuario</a>
                 <a href="{% url 'cierre' %}">Cerrar sesión</a>
-                <a href="{% url 'user' %}">@{{ user.username }}</a>
             {% else %}
                 <a href="{% url 'registro' %}">Registrate</a>
                 <form method="get" action="{% url 'login' %}" class="login-form">

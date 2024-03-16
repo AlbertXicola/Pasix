@@ -1,11 +1,11 @@
 from django.db import models
 
 OPCIONES_CONSULTAS = [
-    (0, "ㅤSeleccionar"),
-    (1, "ㅤSugerencias"),
-    (2, "ㅤAyuda"),
-    (3, "ㅤReportes"),
-    (4, "ㅤOtros"),
+    (0, "ㅤ  Seleccionar"),
+    (1, "ㅤ  Sugerencias"),
+    (2, "ㅤ  Ayuda"),
+    (3, "ㅤ  Reportes"),
+    (4, "ㅤ  Otros"),
 ]
 
 class Contacto(models.Model):
@@ -22,9 +22,10 @@ class Contacto(models.Model):
 class Fichero(models.Model):
     id_usuario = models.IntegerField(unique=False)
     id_archivo = models.CharField(max_length=255)
+    hora_analizado = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return f"ID_Archivo_Mongo: {self.id_archivo}, ID_Usuario: {self.id_usuario}"
+        return f"ID_Archivo_Mongo: {self.id_archivo}, ID_Usuario: {self.id_usuario}, Hora analisis {self.hora_analizado}"
 
 
 class Compartidos(models.Model):

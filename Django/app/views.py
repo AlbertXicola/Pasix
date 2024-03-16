@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import ContactoForm, CustomUserCreationForm
 from django.contrib.auth.forms import UserCreationForm
-
+from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 import os
@@ -16,12 +16,20 @@ import datetime
 
 
 
+
 def cierre(request):
     logout(request)
     return redirect('home')
 
 def home(request):
     return render(request, 'app/home.html')
+
+def usuario(request):
+    usuario = request.user
+    data = {}  # Crear un diccionario para almacenar los datos a pasar a la plantilla
+    data['form'] = ContactoForm(initial={'nombre': usuario.username, 'correo': usuario.email})
+
+    return render(request, 'app/usuario.html', data)
 
 def pycore_view(request):
     return render(request, 'registration/pycore.html')
@@ -41,16 +49,12 @@ def terminos(request):
 def perfil(request):
     return render(request, 'app/perfil.html')
 
-def archivos(request):
-    ficheros = Fichero.objects.filter(id_usuario = request.user.id)  # Ejemplo: selecciona el primer objeto de la tabla Fichero
-    return render(request, 'app/archivos.html', {'ficheros': ficheros})
+
 
 
 
 def contacto(request):
-    data = {
-        'form': ContactoForm()
-    }
+    data = {}
 
     if request.method == 'POST':
         formulario = ContactoForm(data=request.POST)
@@ -59,11 +63,15 @@ def contacto(request):
             data["mensaje"] = "Mensaje enviado correctamente"
         else:
             data["form"] = formulario
-
-
+    else:
+        if request.user.is_authenticated:  # Verifica si el usuario está autenticado
+            usuario = request.user
+            # Prellenar el formulario con la información del usuario en sesión
+            data['form'] = ContactoForm(initial={'nombre': usuario.username, 'correo': usuario.email})
+        else:
+            data['form'] = ContactoForm()  # Si no está autenticado, formulario vacío
 
     return render(request, 'app/contacto.html', data)
-
 
 
 def registro(request):
@@ -90,7 +98,7 @@ def user_view(request):
     else:
         form = UserCreationForm()
 
-    return render(request, 'app/user.html', {'form': form})
+    return render(request, 'app/usuario.html', {'form': form})
 
 
 
@@ -106,7 +114,7 @@ def analisis(request):
         archivos = request.FILES.getlist('files[]')
 
         if not archivos:
-            return render(request, 'registration/pycore.html', {'message_select': 'Archivo Erroneo o No se ha seleccionado Archivo'})
+            return render(request, 'registration/pycore.html', {'message_select': 'No se ha seleccionado Archivo o Formato Erroneo'})
 
         if not os.path.exists(carpeta_Para_analizar):  # Asegurarse de que el directorio para analizar exista
             os.makedirs(carpeta_Para_analizar)
@@ -138,7 +146,8 @@ def analisis(request):
             if request.user.is_authenticated:
                 id_usuario = request.user.id
             
-            fichero = Fichero(id_archivo=id_archivo, id_usuario=id_usuario)
+            fichero = Fichero(id_archivo=id_archivo, id_usuario=id_usuario, hora_analizado=timezone.now())
+
             fichero.save()
 
         
@@ -164,7 +173,7 @@ def archivos(request):
 
 
 
-    now = "dater"
+
     nombre_usuario = request.user.username
     id_usuario = request.user.id
 
@@ -180,34 +189,66 @@ def archivos(request):
             nombre_archivo = fichero_mongo.get('Nombre_Archivo')
             Anomalias = fichero_mongo.get('Maldades')
             Estado = fichero_mongo.get('Prevision')
+            hora_analizado = fichero.hora_analizado.strftime("%Y-%m-%d %H:%M:%S") if fichero.hora_analizado else "N/A"
             archivos_data.append({
                 'nombre_archivo': nombre_archivo,
                 'anomalias': Anomalias,
                 'prevision': Estado,
+                'hora_analizado': hora_analizado,  # Asegúrate de incluir la hora analizada en el diccionario de datos
+
             })
 
-    now = datetime.datetime.now()  
-
     context = {
-        'archivos_data': archivos_data,
-        'now': now,
-        'nombre_usuario': nombre_usuario,
-        'id_usuario': id_usuario
+       'archivos_data': archivos_data,
+       'nombre_usuario': nombre_usuario,
+       'id_usuario': id_usuario,
+       'ficheros': django_data  # Añadir los ficheros completos al contexto
     }
 
     return render(request, 'app/archivos.html', context)
 
-def eliminar_archivo(request, archivo_id):
-    if request.method == 'POST':
-        try:
-            # Eliminar el archivo de Django
-            Fichero.objects.filter(id_archivo=archivo_id).delete()
 
-            messages.success(request, 'El archivo ha sido eliminado correctamente.')
-            return redirect('archivos')  # Redirigir a la página de archivos
-        except Exception as e:
-            messages.error(request, f'Ocurrió un error al eliminar el archivo: {e}')
-            return redirect('archivos')  # Redirigir a la página de archivos
 
-    # Si se intenta acceder a la URL de eliminación directamente por GET, redirigir a la página de archivos
-    return redirect('archivos', )
+
+from django.http import HttpResponse, FileResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Fichero
+
+def eliminar_fichero(request, fichero_id):
+    fichero = get_object_or_404(Fichero, id=fichero_id)
+    fichero.delete()
+    return redirect('archivos')  # Puedes redireccionar a cualquier página después de eliminar el registro
+
+
+
+
+def descargar_archivo(request, nombre_archivo):
+    # Ruta del archivo
+
+        # Definir la ruta base
+   # ruta_base_Limpio = '/home/pasix/Descargas/Pasix/Finalizado/Limpio'
+   # ruta_base_Cuarentena = '/home/pasix/Descargas/Pasix/Finalizado/Cuarentena'
+   # ruta_base_Malicioso = '/home/pasix/Descargas/Pasix/Finalizado/Malicioso'
+
+   # if anomalias == 0:
+   #     ruta_archivo = os.path.join(ruta_base_Limpio, nombre_archivo)
+   # elif 1 <= anomalias <= 5:
+   #     ruta_archivo = os.path.join(ruta_base_Cuarentena, nombre_archivo)
+   # elif 6 <= anomalias <= 1000:
+   #     ruta_archivo = os.path.join(ruta_base_Malicioso, nombre_archivo)
+    
+
+    ruta_base = os.path.join('/home/pasix/Descargas/Pasix/Finalizado', nombre_archivo)  # Reemplaza 'ruta_de_tu_directorio_de_archivos' con la ruta real
+    
+    # Verificar si el archivo existe
+    if os.path.exists(ruta_base):
+        # Abrir el archivo y devolverlo como una respuesta de archivo
+        with open(ruta_base, 'rb') as archivo:
+            response = HttpResponse(archivo.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{nombre_archivo}"'
+            print("Ruta del archivo:", ruta_base)
+
+            return response
+    else:
+        # Si el archivo no existe, devolver un error 404
+        return HttpResponse(status=404)

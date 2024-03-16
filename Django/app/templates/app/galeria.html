@@ -2,12 +2,68 @@
 {% load static %}
 {% block contenido %}
 
-<div class="project-content">
+<style>
+  .circle-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    flex-wrap: wrap; /* Para permitir que los elementos se envuelvan cuando no hay suficiente espacio */
+  }
+  
+  .circle-wrapper {
+    text-align: center;
+    margin-bottom: 20px; /* Espacio entre cada círculo y su nombre */
+  }
+  
+  .circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden; /* Oculta el exceso de la imagen */
+    position: relative;
+    margin: 40px;
+  }
+  
+  .circle img {
+    width: 100%; /* Establece el ancho de la imagen al 100% */
+    height: 100%; /* Establece la altura de la imagen al 100% */
+    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor */
+    clip-path: circle(50%); /* Recorta la imagen para que se ajuste al círculo */
+ 
+  }
+  
+  .text {
+    width: 100%;
+    text-align: center;
+    color: #d4d4d4; /* Color de texto blanco */
+    font-size: 20px; /* Tamaño de fuente grande */
+    font-weight: bold; /* Texto en negrita */
+  }
+</style>
 
-    <div class="image-containerr">
-        <img src="{% static 'app/img/imagen.jpg' %}" alt="Descripción de la imagen">
-        <div class="texto-superpuesto">Próximamente </div>
+<div class="project-content">
+  <div class="circle-container">
+    <div class="circle-wrapper">
+      <div class="circle">
+        <img src="{% static '/app/img/pau.jpg' %}" alt="Imagen 1">
+      </div>
+      <div class="text">PAU CAÑADILLAS</div>
     </div>
+    
+    <div class="circle-wrapper">
+      <div class="circle">
+        <img class="imagent" src="{% static '/app/img/Max.png' %}" alt="Imagen 2">
+      </div>
+      <div class="text">MAX THOMAS</div>
+    </div>
+    
+    <div class="circle-wrapper">
+      <div class="circle">
+        <img src="{% static '/app/img/Xicola.jpg' %}" alt="Imagen 3">
+      </div>
+      <div class="text">ALBERT XICOLA</div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

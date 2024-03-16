@@ -40,8 +40,10 @@ header > div {
   color: #ffffff; /* Blanco */
   font-size: 24px; /* Tamaño del texto del logo */
   font-weight: bold; /* Negrita */
-}
+  text-decoration: none; /* Evita el subrayado */
+  
 
+}
 
 .navigation a {
   position: relative;

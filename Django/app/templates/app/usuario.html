@@ -1,0 +1,131 @@
+{% extends 'app/user.html' %}
+{% load static %}
+{% block contenido %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    .contenedor {
+        display: flex;
+        justify-content: center; /* Centrar los elementos horizontalmente */
+    }
+
+    .cuadrado {
+        margin: 20px;
+        position: relative;
+    }
+
+    .avatar {
+        width: 150px; /* Ajustar el tamaño del círculo */
+        height: 150px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 20px; /* Posicionar hacia arriba */
+        left: 50%; /* Centrar horizontalmente */
+        transform: translateX(-50%); /* Centrar completamente */
+        display: flex;
+        justify-content: center; /* Centrar horizontalmente */
+        align-items: center; /* Centrar verticalmente */
+    }
+
+    .avatar i {
+        font-size: 10em; /* Tamaño del ícono */
+    }
+
+    .izquierda {
+        width: 450px;
+        height: 70vh;
+        background-color: #555555; /* Color de fondo gris */
+        border: 3px solid #00000000;
+        border-radius: 10px;
+        color: black;
+        padding: 20px;
+        position: relative;
+    }
+
+    .derecha {
+        padding-top: 30px;
+        padding-left: 30px;
+        flex-grow: 1; /* El cuadrado de la derecha ocupará todo el espacio restante */
+        height: 71vh;
+        background-color: #555555; /* Color de fondo gris */
+        border: 3px solid #00000000;
+        border-radius: 10px;
+        color: black;
+        position: relative;
+        margin-left: 2px;
+    }
+
+    .datos {
+        margin-top: 180px; /* Ajustar la posición de los datos */
+    }
+    .grupo,
+    .tipo,
+    .nombre,
+    .correo {
+        background-color: rgb(158, 158, 158); /* Color de fondo blanco */
+        margin-bottom: 20px; /* Ajustar el margen inferior */
+        padding: 10px; /* Ajustar el relleno */
+        border-radius: 5px;
+        margin-top: 5px; /* Bajar un poco las barras */
+    }
+    .Titulín{
+        color: #ffffff; /* Color de texto blanco */
+        font-size: 15px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+
+    }
+    .titulo1
+    {
+
+        color: #ffffff; /* Color de texto blanco */
+        font-size: 23px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+    }
+    .texto1
+    {   
+        padding-top: 18px;
+        color: #d4d4d4; /* Color de texto blanco */
+        font-size: 14px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+    }
+
+</style>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="cuadrado izquierda">
+            <div class="avatar">
+                <i class="fas fa-user-circle fa-5x"></i> <!-- Icono de avatar -->
+            </div>
+            <div class="datos">
+                <a class="Titulín">Nombre de usuario</a>
+                <div class="correo">{{ user.username }}</div>
+
+                <a class="Titulín">Correo electrónico</a>
+                <div class="nombre">ㅤ{{ user.email }}</div>
+
+                <a class="Titulín">Tipo de usuario</a>
+                {% if user.is_staff %}
+                <div class="tipo">Administrador</div>
+                {% else %}
+                <div class="tipo">Usuario Común</div>
+                {% endif %}
+
+                <a class="Titulín">Grupo asignado</a>
+                <div class="tipo">ㅤ</div>
+            </div>
+        </div>
+        <div class="cuadrado derecha">
+            <a class="titulo1">Bienvenido {{ user.username }}!</a>
+            <p class="texto1">¡Bienvenido a nuestra aplicación de análisis de virus desarrollada por el Grupo Pasix! </p>
+            <p class="texto1">Nuestra plataforma utiliza la API de VirusTotal en combinación con el poderoso framework Django para ofrecerte una herramienta eficiente y confiable para detectar y analizar posibles amenazas de virus en archivos.</p>
+            <p class="texto1">Con nuestra aplicación, puedes cargar archivos sospechosos y obtener un análisis exhaustivo de su seguridad. </p>
+            <p class="texto1">La integración con VirusTotal nos permite acceder a una amplia gama de motores antivirus y bases de datos de firmas para identificar cualquier tipo de amenaza, desde malware conocido hasta nuevas variantes.</p>
+            <p class="texto1">Además, nuestra interfaz de usuario intuitiva te permite visualizar los resultados de los análisis de manera clara y comprensible, lo que facilita la toma de decisiones sobre cómo manejar los archivos sospechosos.</p>
+            <p class="texto1">Estamos comprometidos con la seguridad de nuestros usuarios y trabajamos constantemente en mejorar y actualizar nuestra aplicación para mantenerte protegido contra las últimas amenazas cibernéticas.</p>
+        </div>
+        
+    </div>
+</body>
+{% endblock %}

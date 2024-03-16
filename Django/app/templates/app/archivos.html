@@ -21,8 +21,8 @@
       }
 
       .recuadro-interno {
-        width: 23%; /* Ancho del recuadro interno */
-        height:30%; /* Altura automática para adaptarse al contenido */
+        width: 21%; /* Ancho del recuadro interno */
+        height:34%; /* Altura automática para adaptarse al contenido */
         background-color: #5f5f5f; /* Color de fondo gris claro */
         display: flex;
         align-items: flex-start; /* Alineación a la izquierda */
@@ -65,7 +65,7 @@
       }
       
       .descargar {
-        margin-top: 120px;
+        margin-top:25px;
         margin-right: 20px;
         background-color: #3fa53b; /* Color de fondo */
         color: white; /* Color del texto */
@@ -77,9 +77,10 @@
         border-radius: 2px; /* Redondear los bordes del recuadro interno */
       }
       .eliminar {
-        margin-top: 120px;
+        margin-top:25px;
         margin-right: 20px;
-        font-size:20px ;
+
+        font-size:23px ;
         background-color: #a32c2c; /* Color de fondo */
         color: white; /* Color del texto */
         border: none; /* Quitar borde */
@@ -89,10 +90,27 @@
 
         border-radius: 2px; /* Redondear los bordes del recuadro interno */
       }
+      .compartir {
+        margin-top:20px;
+        margin-right: 20px;
+
+        font-size:21px ;
+        background-color: #2c3ea3; /* Color de fondo */
+        color: white; /* Color del texto */
+        border: none; /* Quitar borde */
+
+        cursor: pointer; /* Cambiar cursor al pasar por encima */
+        transition: background-color 0.3s; /* Transición suave para el cambio de color */
+
+        border-radius: 2px; /* Redondear los bordes del recuadro interno */
+      }
+      .compartir:hover,
       .eliminar:hover,
       .descargar:hover {
         background-color: #444; /* Cambiar color de fondo al pasar el cursor */
       }
+
+
     </style>
 <h2 class="achedos">Mis Archivos</h2>
 
@@ -117,15 +135,34 @@
   
       <div class="texto-grande">Estado del Archivo:</div>
       <div class="texto-pequeno">{{ archivo.prevision }}</div>
+      <div class="texto-grande">Hora Analizado</div>
+      <div class="texto-pequeno">{{ archivo.hora_analizado }}</div>
     </div>
+
+
+
     <div class="2">
-      <form method="post" action="{% url 'eliminar_archivo' archivo.id_archivo %}">
+
+      <form method="post">
         {% csrf_token %}
-        <button type="submit" class="eliminar"><i class="fas fa-trash-alt"></i> {{delete}}</button>
+        <button class="compartir" onclick="return confirm('¿Estás seguro de que quieres descargar este archivo?')"><i class="fas fa-share"></i> </button>
       </form>
-      <button class="descargar"><i class="fas fa-download"></i> </button>
+
+      <form action="{% url 'eliminar_fichero' ficheros.0.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Eliminar" class="eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar este archivo?')"><i class="fas fa-trash-alt"></i> </button>
+      </form>
+    
+      <form action="{% url 'descargar_archivo' archivo.nombre_archivo %}" method="get">
+        {% csrf_token %}
+        <button class="descargar" onclick="return confirm('¿Estás seguro de que quieres descargar este archivo?')"><i class="fas fa-download"></i> </button>
+      </form>
+
+
     </div>
+    
   </div>
   {% endfor %}
 </div>  
 {% endblock %}
+

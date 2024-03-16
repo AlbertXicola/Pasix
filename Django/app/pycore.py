@@ -22,9 +22,10 @@ api_key = "2f047d42c57a702fd720dd049e5d7f8d24baf8811faf42d34226e703be6270a9"
 base_url = "https://www.virustotal.com/api/v3"
 
 carpeta_Para_analizar = "Para_Analizar"
-ruta_destino_Limpio = "Finalizado/Limpio"
-ruta_destino_Cuarentena = "Finalizado/Cuarentena"
-ruta_destino_Malicioso = "Finalizado/Malicioso"
+todos_los_archivos = "Finalizado"
+#ruta_destino_Limpio = "Finalizado/Limpio"
+#ruta_destino_Cuarentena = "Finalizado/Cuarentena"
+#ruta_destino_Malicioso = "Finalizado/Malicioso"
 
 
 def calcular_sha256_hash(file_path):
@@ -75,13 +76,13 @@ def procesar_archivo(archivo_path):
             malicious_segunda_solicitud = last_analysis_stats
 
             if malicious_segunda_solicitud == 0:
-                destino = ruta_destino_Limpio
+                destino = todos_los_archivos
                 mensaje_destino = 'Archivo limpio'
             elif malicious_segunda_solicitud <= 5:
-                destino = ruta_destino_Cuarentena
+                destino = todos_los_archivos
                 mensaje_destino = 'Archivo posiblemente infectado'
             elif malicious_segunda_solicitud > 5:
-                destino = ruta_destino_Malicioso
+                destino = todos_los_archivos
                 mensaje_destino = 'Archivo infectado'
 
             data_to_insert = {
@@ -121,40 +122,3 @@ def procesar_archivos_en_carpeta():
 
     return resultados
 
-
-@csrf_exempt
-
-def upload_files(request):
-    if request.method == 'POST':
-        archivos = request.FILES.getlist('files[]')
-
-        if not archivos:
-            return JsonResponse({'error': 'No se seleccionaron archivos válidos'}, status=400)
-
-        # Asegurarse de que el directorio para analizar exista
-        if not os.path.exists(carpeta_Para_analizar):
-            os.makedirs(carpeta_Para_analizar)
-
-        resultados = []  # Lista para almacenar resultados de los archivos subidos
-
-        for archivo in archivos:
-            archivo_path = os.path.abspath(os.path.join(carpeta_Para_analizar, archivo.name))
-            print("Ruta del archivo:", archivo_path)  # Agregar esta línea para imprimir la ruta del archivo
-            with open(archivo_path, 'wb') as destination:
-                for chunk in archivo.chunks():
-                    destination.write(chunk)
-
-            # Procesar el archivo y obtener el resultado específico
-            resultado_procesamiento = procesar_archivo(archivo_path)
-            print("Resultado del procesamiento:", resultado_procesamiento)  # Agregar esta línea para imprimir el resultado del procesamiento
-
-            # Agregar el resultado a la lista de resultados
-            resultados.append(resultado_procesamiento)
-
-
-        # Puedes devolver una respuesta JSON con los resultados de los archivos subidos
-        return render(request, 'app/analisis.html', {'message': 'Carga exitosa', 'resultados': resultados})
-
-
-
-    return JsonResponse({'error': 'Método no permitido'}, status=405)
