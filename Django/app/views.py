@@ -60,6 +60,7 @@ def contacto(request):
         formulario = ContactoForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
+            data["form"] = formulario
             data["mensaje"] = "Mensaje enviado correctamente"
         else:
             data["form"] = formulario
