@@ -150,10 +150,21 @@
 
       <form method="post">
         {% csrf_token %}
-        <button class="compartir" onclick="return confirm('¿Estás seguro de que quieres descargar este archivo?')"><i class="fas fa-share"></i> </button>
-      </form>
+        <button class="compartir" onclick="togglePanel()"><i class="fas fa-share"></i> </button>
+        <div id="panelUsuarios" style="display: none;">
 
+        </div>
+      </form>
       
+      <ul>
+        {% for usuario in usuarios %}
+          <li>{{ usuario.username }}</li>
+        {% endfor %}
+      </ul>
+
+
+    
+
       <form action="{% url 'eliminar_fichero' ficheros.0.id %}" method="post">
         {% csrf_token %}
         <button type="submit" value="Eliminar" class="eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar este archivo?')"><i class="fas fa-trash-alt"></i> </button>
@@ -165,10 +176,14 @@
       </form>
 
 
+
     </div>
     
   </div>
   {% endfor %}
 </div>  
+
+
+
 {% endblock %}
 

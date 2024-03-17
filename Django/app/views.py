@@ -13,7 +13,8 @@ from bson.objectid import ObjectId
 from .models import Fichero
 import datetime
 from django.http import HttpResponse, FileResponse
-
+from django.shortcuts import render
+from django.contrib.auth.models import User
 
 def cierre(request):
     logout(request)
@@ -199,17 +200,18 @@ def archivos(request):
                 'hora_analizado': hora_analizado,  # Asegúrate de incluir la hora analizada en el diccionario de datos
 
             })
-
+    usuarios = User.objects.all()
     context = {
        'archivos_data': archivos_data,
        'nombre_usuario': nombre_usuario,
        'id_usuario': id_usuario,
-       'ficheros': django_data  # Añadir los ficheros completos al contexto
-    }
+       'ficheros': django_data,  # Añadir los ficheros completos al contexto
+       'usuarios': usuarios   }
 
     return render(request, 'app/archivos.html', context)
 
-
+def compartido(request):
+    return render(request, 'app/compartido.html')
 
 
 def eliminar_fichero(request, fichero_id):
@@ -254,9 +256,3 @@ def descargar_archivo(request, nombre_archivo):
 
 
 
-from django.shortcuts import render
-from django.contrib.auth.models import User
-
-def compartido(request):
-    usuarios = User.objects.all()
-    return render(request, 'app/compartido.html', {'usuarios': usuarios})
