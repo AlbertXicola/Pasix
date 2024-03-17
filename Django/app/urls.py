@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, contacto, galeria, registro, olvidada, terminos, user_view, pycore_view, descargar_archivo, perfil ,cierre, archivos, analisis, usuario, eliminar_fichero
+from .views import home, contacto, galeria, registro, olvidada, terminos, compartido , user_view, pycore_view, descargar_archivo, perfil ,cierre, archivos, analisis, usuario, eliminar_fichero
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -11,6 +11,8 @@ urlpatterns = [
     path('terminos/', terminos, name='terminos'),
     path('user/', user_view, name='user'),
     path('usuario/', usuario, name='usuario'),
+    path('compartido/', compartido, name='compartido'),
+
 
     path('flask/', TemplateView.as_view(template_name='index_flask.html'), name='flask_upload'),
     path('pycore/', pycore_view, name='pycore'),

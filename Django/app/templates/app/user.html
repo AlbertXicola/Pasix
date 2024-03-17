@@ -19,17 +19,18 @@
         </header>
 
         <nav>
-            <a href="{% url 'usuario' %}">Usuario</a>
+            <a class = "seleccion1" href="{% url 'usuario' %}">Usuario</a>
             <!-- <a href="{% url 'perfil' %}">Perfil</a> -->
             <!-- <a href="#">Configuración</a> -->
-            <a href="{% url 'pycore' %}">Analisis</a>
-            <a href="{% url 'archivos' %}">Mis Archivos</a>
+            <a class = "seleccion2" href="{% url 'pycore' %}">Analisis</a>
+            <a class = "seleccion3" href="{% url 'archivos' %}">Mis Archivos</a>
+            <a class = "seleccion4" href="{% url 'compartido' %}">Compartido</a>
             {% if user.is_staff %}
-            <a href="{% url 'admin:index' %}">Panel admin</a>
+            <a class = "seleccion5" href="{% url 'admin:index' %}">Panel admin</a>
             {% endif %}
             
-            <a href="{% url 'home' %}">Menú Principal</a>
-            <a href="{% url 'cierre' %}">Cerrar Sesión</a>
+            <a class = "seleccion6" href="{% url 'home' %}">Menú Principal</a>
+            <a href="{% url 'cierre' %}" onclick="return confirm('¿Estás seguro de que quieres Cerrar Sessión?')">Cerrar Sesión</a>
 
 
         </nav>

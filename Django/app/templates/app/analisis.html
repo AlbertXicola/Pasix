@@ -19,7 +19,49 @@
         margin: 20px; /* Margen entre recuadros */
         border-radius: 10px; /* Redondear los bordes del recuadro */
       }
+      .volver {
+        color: #ffffff; /* Color de texto blanco */
+        font-size: 13px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+        text-decoration: none;
+        margin-top: 570px; /* Centrar verticalmente y establecer margen horizontal */
+        margin-left: 1050px;
 
+        text-align: center; /* Centrar el texto horizontalmente */
+        background-color: #5f5f5f; /* Color de fondo gris claro */
+        border: 3px solid #6d6d6d;
+        border-radius: 10px; /* Redondear los bordes del recuadro */
+        padding: 5px;
+        width: 150px;
+        height: 25px;
+        padding-top: 13px;
+
+      }
+
+      .volver1 {
+        color: #ffffff; /* Color de texto blanco */
+        font-size: 13px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+        text-decoration: none;
+        margin-top: 570px; /* Centrar verticalmente y establecer margen horizontal */
+        margin-left: 50px;
+        text-align: center; /* Centrar el texto horizontalmente */
+        background-color: #5f5f5f; /* Color de fondo gris claro */
+        border: 3px solid #6d6d6d;
+        border-radius: 10px; /* Redondear los bordes del recuadro */
+        padding: 5px;
+        width: 150px;
+        height: 25px;
+        padding-top: 13px;
+
+      }
+
+      .seleccion2 {
+        color: #ec3717;
+        text-decoration: none;
+        margin: 0 10px;
+        font-weight: bold; /* Aplica negrita */
+      }
       .recuadro-interno {
         width: 23%; /* Ancho del recuadro interno */
         height:30%; /* Altura automática para adaptarse al contenido */
@@ -64,6 +106,7 @@
 
     </style>
 <h2 class="achedos">Resultados del análisis de archivos</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
 <div class="recuadro">
@@ -91,6 +134,14 @@
       <div class="texto-pequeno">{{ resultado.data.Prevision }}</div>
   </div>
       {% endfor %}
+    <a class= "volver" href="{% url 'pycore' %}" class="seleccion2">
+        <i class="fas fa-arrow-left"></i> Analizar Más
+    </a>
+    <a class= "volver1" href="{% url 'archivos' %}" class="seleccion2">Mis analizados
+      <i class="fas fa-arrow-right"></i> 
+  </a>
 </div>
+
+
     
 {% endblock %}

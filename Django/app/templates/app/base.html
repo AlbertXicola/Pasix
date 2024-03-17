@@ -21,15 +21,15 @@
         <a class="logo" href="{% url 'home' %}" >APBI2</a>
         
         <nav class="navigation">
-            <a href="{% url 'home' %}">Inicio</a>
-            <a href="{% url 'galeria' %}">Galeria</a>
-            <a href="{% url 'contacto' %}">Contacta</a>
+            <a class="first-nav-link" href="{% url 'home' %}">Inicio</a>
+            <a class="second-nav-link" href="{% url 'galeria' %}">Galeria</a>
+            <a class="thirst-nav-link" href="{% url 'contacto' %}">Contacta</a>
             {% if user.is_authenticated %}
                 
                 <a href="{% url 'usuario' %}">Panel de Usuario</a>
-                <a href="{% url 'cierre' %}">Cerrar sesión</a>
+                <a href="{% url 'cierre' %}" onclick="return confirm('¿Estás seguro de que quieres Cerrar Sessión?')">Cerrar sesión</a>
             {% else %}
-                <a href="{% url 'registro' %}">Registrate</a>
+                <a class="cuatro-nav-link" href="{% url 'registro' %}">Registrate</a>
                 <form method="get" action="{% url 'login' %}" class="login-form">
                     <button type="submit" class="btnLogin-popup">Login</button>
                 </form>

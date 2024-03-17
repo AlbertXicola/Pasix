@@ -1,7 +1,20 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% block contenido %}
-
+<style>
+    .navigation .cuatro-nav-link {
+        position: relative;
+        font-size: 1.1em;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 500;
+        margin-left: 40px;
+        font-weight: bold; /* Aplica negrita */
+    
+    }
+    
+    
+</style>
 <div class="wrapper">
   <span class="icon-close">
       <ion-icon name="close-outline"></ion-icon>
@@ -34,23 +47,25 @@
           </div>
 
           <div class="input-box">
-              <span class="icon">
+            <span class="icon">
                 <ion-icon name="lock-closed"></ion-icon>
-              </span>
-              {{ form.password1 }}
-              <label>Contraseña</label>
-              {% if form.password1.errors %}
+            </span>
+            <input type="password" name="password1" id="id_password1">
+            <label>Contraseña</label>
+            {% if form.password1.errors %}
                 <span class="error">{{ form.password1.errors }}</span>
-              {% endif %}
-              <button type="button" id="1toggleLoginPassword" class="eye-icon">
+            {% endif %}
+            <button type="button" id="1toggleLoginPassword" class="eye-icon">
                 <ion-icon name="eye-outline"></ion-icon>
-              </button>
-          </div>
+            </button>
+        </div>
 
           <div class="input-box">
               <span class="icon">
                 <ion-icon name="lock-closed"></ion-icon>
               </span>
+              <input type="password" name="password2" id="id_password2">
+
               {{ form.password2 }}
               <label>Repite Contraseña</label>
               {% if form.password2.errors %}

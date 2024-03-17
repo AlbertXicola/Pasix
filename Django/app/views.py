@@ -51,6 +51,9 @@ def perfil(request):
 
 
 
+from django.shortcuts import render
+from .forms import ContactoForm
+
 def contacto(request):
     data = {}
 
@@ -58,17 +61,17 @@ def contacto(request):
         formulario = ContactoForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
-            data["form"] = formulario
             data["mensaje"] = "Mensaje enviado correctamente"
+            # Crear un nuevo formulario vacío
+            data["form"] = ContactoForm()
         else:
             data["form"] = formulario
     else:
-        if request.user.is_authenticated:  # Verifica si el usuario está autenticado
+        if request.user.is_authenticated:
             usuario = request.user
-            # Prellenar el formulario con la información del usuario en sesión
             data['form'] = ContactoForm(initial={'nombre': usuario.username, 'correo': usuario.email})
         else:
-            data['form'] = ContactoForm()  # Si no está autenticado, formulario vacío
+            data['form'] = ContactoForm()
 
     return render(request, 'app/contacto.html', data)
 
@@ -93,7 +96,7 @@ def user_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)  # Inicia sesión después del registro
-            return redirect('user')  # Redirige a la página deseada después del registro
+            return redirect('app/usuario.html')  # Redirige a la página deseada después del registro
     else:
         form = UserCreationForm()
 
@@ -249,3 +252,11 @@ def descargar_archivo(request, nombre_archivo):
         return HttpResponse(status=404)
     
 
+
+
+from django.shortcuts import render
+from django.contrib.auth.models import User
+
+def compartido(request):
+    usuarios = User.objects.all()
+    return render(request, 'app/compartido.html', {'usuarios': usuarios})

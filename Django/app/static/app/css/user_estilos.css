@@ -45,6 +45,7 @@ nav a {
     color: #fff;
     text-decoration: none;
     margin: 0 10px;
+    font-weight: normal; /* Asegura que el texto no esté en negrita por defecto */
 }
 
 section {
