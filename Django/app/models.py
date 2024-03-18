@@ -29,7 +29,7 @@ class Fichero(models.Model):
 
 
 
-class Compartidos(models.Model):
+class Compartido(models.Model):
     id_usuario = models.IntegerField(unique=False)
     id_ucompartido = models.IntegerField(unique=False)
     id_archivo = models.CharField(max_length=255)

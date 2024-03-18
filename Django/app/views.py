@@ -198,7 +198,7 @@ def archivos(request):
                 'anomalias': Anomalias,
                 'prevision': Estado,
                 'hora_analizado': hora_analizado,  # Asegúrate de incluir la hora analizada en el diccionario de datos
-
+                'id': fichero.id,
             })
     usuarios = User.objects.all()
     context = {
@@ -210,14 +210,14 @@ def archivos(request):
 
     return render(request, 'app/archivos.html', context)
 
-def compartido(request):
-    return render(request, 'app/compartido.html')
+
 
 
 def eliminar_fichero(request, fichero_id):
     fichero = get_object_or_404(Fichero, id=fichero_id)
     fichero.delete()
     return redirect('archivos')  # Puedes redireccionar a cualquier página después de eliminar el registro
+
 
 
 
@@ -238,7 +238,7 @@ def descargar_archivo(request, nombre_archivo):
    #     ruta_archivo = os.path.join(ruta_base_Malicioso, nombre_archivo)
     
 
-    ruta_base = os.path.join('/home/pasix/Descargas/Pasix/Finalizado', nombre_archivo)  # Reemplaza 'ruta_de_tu_directorio_de_archivos' con la ruta real
+    ruta_base = os.path.join('/home/pasix/Downloads/Pasix/Finalizado', nombre_archivo)  # Reemplaza 'ruta_de_tu_directorio_de_archivos' con la ruta real
     
     # Verificar si el archivo existe
     if os.path.exists(ruta_base):
@@ -254,5 +254,26 @@ def descargar_archivo(request, nombre_archivo):
         return HttpResponse(status=404)
     
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Compartido
+
+def compartir_archivo(request):
+    if request.method == 'POST':
+        id_usuario = request.user.id  
+        id_usuariocompartido = request.POST.get('usuario_compartir')
+        id_archivo = request.POST.get('id_fichero')
+
+        compartido = Compartido.objects.create(id_usuario=id_usuario, id_ucompartido=id_usuariocompartido, id_archivo=id_archivo)
+        compartido.save()
+        
+        messages.success(request, 'Archivo compartido exitosamente.')
+        return redirect('archivos')  # Redirige a la vista 'archivos' definida en tus patrones de URL
+
+    return redirect('app/archivos.html')
 
 
+def compartido(request):
+
+
+    return render(request, 'app/compartido.html')

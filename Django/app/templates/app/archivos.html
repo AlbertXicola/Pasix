@@ -19,6 +19,24 @@
         margin: 20px; /* Margen entre recuadros */
         border-radius: 10px; /* Redondear los bordes del recuadro */
       }
+
+      .comparidosh {
+        color: #ffffff; /* Color de texto blanco */
+        font-size: 15px; /* Tamaño de fuente grande */
+        font-weight: bold; /* Texto en negrita */
+        position: absolute; /* Posición absoluta */
+        top: 0; /* Coloca el mensaje en la parte superior */
+        right: 0; /* Coloca el mensaje en la parte derecha */
+        margin-top: 10px; /* Ajusta el margen superior según sea necesario */
+        margin-right: 10px; /* Ajusta el margen derecho según sea necesario */
+        background-color: rgba(0, 0, 0, 0.5); /* Color de fondo con transparencia */
+        padding: 5px 10px; /* Espaciado interno */
+        border-radius: 5px; /* Bordes redondeados */
+        display: none; /* Oculta el mensaje inicialmente */
+      }
+
+
+
       .seleccion3 {
         color: #ec3717;
         text-decoration: none;
@@ -118,72 +136,138 @@
 
     </style>
 <h2 class="achedos">Mis Archivos</h2>
-
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+    <a class="comparidosh">{{ message }}</a>
+  {% endfor %}
+</ul>
+{% endif %}
 <div class="recuadro">
 
-  
   {% for archivo in archivos_data %}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <div class="recuadro-interno">
-    <div class="1">
-      <div class="texto-grande">Nombre del Archivo:</div>
-      <div class="texto-pequeno">{{ archivo.nombre_archivo }}</div>
-  
-      <div class="texto-grande">Anomalías Detectadas:</div>
-      {% if archivo.anomalias == 0 %}
-        <div class="texto-pequeno verde">{{ archivo.anomalias }}</div>
-      {% elif archivo.anomalias >= 1 and archivo.anomalias <= 5 %}
-        <div class="texto-pequeno amarillo">{{ archivo.anomalias }}</div>
-      {% elif archivo.anomalias >= 6 and archivo.anomalias <= 1000 %}
-        <div class="texto-pequeno rojo">{{ archivo.anomalias }}</div>
-      {% endif %}
-  
-      <div class="texto-grande">Estado del Archivo:</div>
-      <div class="texto-pequeno">{{ archivo.prevision }}</div>
-      <div class="texto-grande">Hora Analizado</div>
-      <div class="texto-pequeno">{{ archivo.hora_analizado }}</div>
-    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <div class="recuadro-interno">
+      <div class="1">
+        <div class="texto-grande">Nombre del Archivo:</div>
+        <div class="texto-pequeno">{{ archivo.nombre_archivo }}</div>
+    
+        <div class="texto-grande">Anomalías Detectadas:</div>
+        {% if archivo.anomalias == 0 %}
+          <div class="texto-pequeno verde">{{ archivo.anomalias }}</div>
+        {% elif archivo.anomalias >= 1 and archivo.anomalias <= 5 %}
+          <div class="texto-pequeno amarillo">{{ archivo.anomalias }}</div>
+        {% elif archivo.anomalias >= 6 and archivo.anomalias <= 1000 %}
+          <div class="texto-pequeno rojo">{{ archivo.anomalias }}</div>
+        {% endif %}
+    
+        <div class="texto-grande">Estado del Archivo:</div>
+        <div class="texto-pequeno">{{ archivo.prevision }}</div>
+        <div class="texto-grande">Hora Analizado</div>
+        <div class="texto-pequeno">{{ archivo.hora_analizado }}</div>
+      </div>
 
+      <div class="2">
+        
+        <button class="compartir" onclick="togglePanel(event)"><i class="fas fa-share"></i> </button>
+        <div id="panelUsuarios" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 10px; background-color: #5f5f5f; padding: 20px; border: 3px solid #6d6d6d;">
+          <p style="color: white; text-align: center; font-size: 18px;">Enviar {{ archivo.nombre_archivo }} a:</p>
 
-
-    <div class="2">
-
-      <form method="post">
-        {% csrf_token %}
-        <button class="compartir" onclick="togglePanel()"><i class="fas fa-share"></i> </button>
-        <div id="panelUsuarios" style="display: none;">
-
+          <form id="compartirForm" action="{% url 'compartir_archivo' %}" method="post">
+            {% csrf_token %}
+        
+            <ul style="list-style-type: none;">
+              {% for usuario in usuarios %}
+                {% if usuario != request.user %} <!-- Comparando con el usuario actual -->
+                <li><label style="color: white;"><input type="radio" name="usuario_compartir" value="{{ usuario.id }}"> {{ usuario.username }}</label></li>
+                {% endif %}
+              {% endfor %}
+              
+            </ul>
+            <input type="hidden" name="id_fichero" value="{{ archivo.id }}">
+            <button type="submit" style="background-color: #4caf54; /* Green */
+          border: none;
+          color: white;
+          padding: 10px 26px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 14px;
+          margin: 4px 2px;
+          cursor: pointer;
+          
+          border-radius: 10px;">Enviar</button>
+            <button type="button" style="background-color: #f44336; /* Red */
+          border: none;
+          color: white;
+          padding: 10px 21px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 13px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border-radius: 10px;" onclick="cancelarCompartir()">Cancelar</button>
+          </form>
         </div>
-      </form>
+
+        <form action="{% url 'eliminar_fichero' ficheros.0.id %}" method="post">
+          {% csrf_token %}
+          <button type="submit" value="Eliminar" class="eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar este archivo?')"><i class="fas fa-trash-alt"></i></button>
+        </form>
       
-      <ul>
-        {% for usuario in usuarios %}
-          <li>{{ usuario.username }}</li>
-        {% endfor %}
-      </ul>
+        <form action="{% url 'descargar_archivo' archivo.nombre_archivo %}" method="get">
+          {% csrf_token %}
+          <button class="descargar" onclick="return confirm('¿Estás seguro de que quieres descargar este archivo?')"><i class="fas fa-download"></i></button>
+        </form>
 
-
-    
-
-      <form action="{% url 'eliminar_fichero' ficheros.0.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit" value="Eliminar" class="eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar este archivo?')"><i class="fas fa-trash-alt"></i> </button>
-      </form>
-    
-      <form action="{% url 'descargar_archivo' archivo.nombre_archivo %}" method="get">
-        {% csrf_token %}
-        <button class="descargar" onclick="return confirm('¿Estás seguro de que quieres descargar este archivo?')"><i class="fas fa-download"></i> </button>
-      </form>
-
-
-
+      </div>
+      
     </div>
     
-  </div>
   {% endfor %}
-</div>  
+
+
+</div>
+
+<script>
+  function togglePanel(event) {
+    event.preventDefault(); // Evita que el formulario se envíe automáticamente
+    var panel = document.getElementById("panelUsuarios");
+    if (panel.style.display === "none") {
+      panel.style.display = "block";
+    } else {
+      panel.style.display = "none";
+    }
+  }
+
+  function cancelarCompartir() {
+    var panel = document.getElementById("panelUsuarios");
+    panel.style.display = "none";
+  }
 
 
 
+  function obtenerNombreUsuario() {
+    var usuarioSeleccionado = document.querySelector('input[name=usuario_compartir]:checked');
+    if (usuarioSeleccionado) {
+      var nombreUsuario = usuarioSeleccionado.nextElementSibling.textContent.trim();
+      return nombreUsuario;
+    } else {
+      return 'EL USUARIO SELECCIONADO';
+    }
+  }
+ 
+  // Función para mostrar el mensaje y ocultarlo después de 15 segundos
+  window.onload = function() {
+    var mensaje = document.querySelector('.comparidosh');
+    mensaje.style.display = 'block'; // Muestra el mensaje
+
+    setTimeout(function() {
+      mensaje.style.display = 'none'; // Oculta el mensaje después de 15 segundos
+    }, 10000); // 15000 milisegundos = 15 segundos
+  };
+
+</script>
 {% endblock %}
 
