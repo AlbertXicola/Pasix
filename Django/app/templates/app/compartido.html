@@ -125,9 +125,40 @@
 
     </style>
 <h2 class="achedos">Compartido</h2>
-
 <div class="recuadro">
 
-</div>  
+
+  {% for archivo in archivos_compartidos %}
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <div class="recuadro-interno">
+      <div class="1">
+        <div class="texto-grande">Nombre del Archivo:</div>
+        <div class="texto-pequeno">{{ archivo.nombre_archivo }}</div>
+    
+        <div class="texto-grande">Anomalías Detectadas:</div>
+        {% if archivo.anomalias == 0 %}
+          <div class="texto-pequeno verde">{{ archivo.anomalias }}</div>
+        {% elif archivo.anomalias >= 1 and archivo.anomalias <= 5 %}
+          <div class="texto-pequeno amarillo">{{ archivo.anomalias }}</div>
+        {% elif archivo.anomalias >= 6 and archivo.anomalias <= 1000 %}
+          <div class="texto-pequeno rojo">{{ archivo.anomalias }}</div>
+        {% endif %}
+    
+        <div class="texto-grande">Estado del Archivo:</div>
+        <div class="texto-pequeno">{{ archivo.prevision }}</div>
+        <div class="texto-grande">Hora Analizado</div>
+        <div class="texto-pequeno">{{ archivo.hora_analizado }}</div>
+      </div>
+    
+      <div>
+        <span class="texto-grande">{{ archivo.id_archivo }} Compartido por: {{ archivo.nombre_usuario }}</span>
+      </div>
+    </div>
+    
+  {% endfor %}
+
+</div>
+
 {% endblock %}
 

@@ -273,7 +273,33 @@ def compartir_archivo(request):
     return redirect('app/archivos.html')
 
 
+
+from django.shortcuts import render
+
+from .models import Compartido
+
+from django.contrib.auth.decorators import login_required
+from .models import Fichero
+
+@login_required
+
+
+
+
 def compartido(request):
+    usuario_sesion = request.user.id
+    
+    archivos_compartidos = Compartido.objects.filter(id_ucompartido=usuario_sesion)
+    
+    for archivo_compartido in archivos_compartidos:
+        usuario_compartido = User.objects.get(id=archivo_compartido.id_usuario)
+        archivo_compartido.nombre_usuario = usuario_compartido.username
+        
+        # Obtener el nombre del archivo asociado a este objeto Compartido
 
+    context = {
+        'archivos_compartidos': archivos_compartidos,
+        'Nombre_usuario_actual': request.user.username
+    }
 
-    return render(request, 'app/compartido.html')
+    return render(request, 'app/compartido.html', context)
