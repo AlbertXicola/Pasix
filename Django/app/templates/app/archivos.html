@@ -1,10 +1,9 @@
 {% extends 'app/user.html' %}
 {% load static %}
 {% block contenido %}
-
 <style>
 
-    body {
+      body {
         font-family: Arial, sans-serif; /* Establecer la fuente del cuerpo */
       }
       .recuadro {
@@ -18,6 +17,9 @@
         position: relative; /* Para posicionar el contenido dentro del recuadro */
         margin: 20px; /* Margen entre recuadros */
         border-radius: 10px; /* Redondear los bordes del recuadro */
+        overflow: scroll; /* Habilitar el scroll cuando sea necesario */
+        scroll-behavior: smooth; /* Hacer que el scroll sea suave y fluido */
+        overscroll-behavior: contain; /* Controlar el comportamiento de sobrescrolleo */
       }
 
       .comparidosh {
@@ -34,7 +36,6 @@
         border-radius: 5px; /* Bordes redondeados */
         display: none; /* Oculta el mensaje inicialmente */
       }
-
 
 
       .seleccion3 {
@@ -77,6 +78,13 @@
         font-weight: bold; /* Texto en negrita */
 
       }
+      .texto-nombre {
+        color: #ec3717; /* Color de texto blanco */
+        font-size: 100; /* Tamaño de fuente pequeño */
+        font-weight: bold; /* Texto en negrita */
+
+      }
+      
       .verde {
         color: rgb(26, 179, 46); /* Cambiar el color del texto a azul */
       }
@@ -112,6 +120,21 @@
         transition: background-color 0.3s; /* Transición suave para el cambio de color */
 
         border-radius: 2px; /* Redondear los bordes del recuadro interno */
+      }
+      .info {
+        margin-top: 25px;
+        margin-right: 20px;
+        position: absolute;
+        top: 27.3%;
+        left: 17%;
+        width: 30px; /* Ancho del botón ajustado */
+        font-size: 20px;
+        background-color: #353535;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        border-radius: 2px;
       }
       .compartir {
         margin-top:20px;
@@ -150,7 +173,7 @@
     <div class="recuadro-interno">
       <div class="1">
         <div class="texto-grande">Nombre del Archivo:</div>
-        <div class="texto-pequeno">{{ archivo.nombre_archivo }}</div>
+        <div class="texto-nombre">{{ archivo.nombre_archivo }}</div>
     
         <div class="texto-grande">Anomalías Detectadas:</div>
         {% if archivo.anomalias == 0 %}
@@ -169,45 +192,44 @@
 
       <div class="2">
         
-        <button class="compartir" onclick="togglePanel(event)"><i class="fas fa-share"></i> </button>
+        <button class="compartir" onclick="togglePanel1(event)"><i class="fas fa-share"></i> </button>
         <div id="panelUsuarios" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 10px; background-color: #5f5f5f; padding: 20px; border: 3px solid #6d6d6d;">
           <p style="color: white; text-align: center; font-size: 18px;">Enviar {{ archivo.nombre_archivo }} a:</p>
-
+        
           <form id="compartirForm" action="{% url 'compartir_archivo' %}" method="post">
             {% csrf_token %}
-        
+          
             <ul style="list-style-type: none;">
               {% for usuario in usuarios %}
                 {% if usuario != request.user %} <!-- Comparando con el usuario actual -->
-                <li><label style="color: white;"><input type="radio" name="usuario_compartir" value="{{ usuario.id }}"> {{ usuario.username }}</label></li>
+                <li><label style="color: white;"><input type="checkbox" name="usuarios_compartir[]" value="{{ usuario.id }}"> {{ usuario.username }}</label></li>
                 {% endif %}
               {% endfor %}
-              
             </ul>
             <input type="hidden" name="id_fichero" value="{{ archivo.id }}">
             <button type="submit" style="background-color: #4caf54; /* Green */
-          border: none;
-          color: white;
-          padding: 10px 26px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 14px;
-          margin: 4px 2px;
-          cursor: pointer;
-          
-          border-radius: 10px;">Enviar</button>
+              border: none;
+              color: white;
+              padding: 10px 26px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 14px;
+              margin: 4px 2px;
+              cursor: pointer;
+              border-radius: 10px;">Enviar</button>
             <button type="button" style="background-color: #f44336; /* Red */
-          border: none;
-          color: white;
-          padding: 10px 21px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 13px;
-          margin: 4px 2px;
-          cursor: pointer;
-          border-radius: 10px;" onclick="cancelarCompartir()">Cancelar</button>
+              border: none;
+              color: white;
+              padding: 10px 21px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 13px;
+              position: absolute; /* Posición absoluta */
+              margin: 4px 2px;
+              cursor: pointer;
+              border-radius: 10px;" onclick="cancelarCompartir()">Cancelar</button>
           </form>
         </div>
 
@@ -221,6 +243,32 @@
           <button class="descargar" onclick="return confirm('¿Estás seguro de que quieres descargar este archivo?')"><i class="fas fa-download"></i></button>
         </form>
 
+        <button class="info" onclick="togglePanel2(event)"><i class="fa fa-info"></i></button>
+        <div id="panelInfo" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 10px; background-color: #5f5f5f; padding: 20px; border: 3px solid #6d6d6d;">
+            <!-- Contenido del panel -->
+            <p style="color: white;">Detalles adicionales del archivo:</p>
+            
+            <p style="color: rgb(0, 0, 0);">Hash Api VT: </p>
+            <p style="color: white;">{{ archivo.id_API }}</p>
+            <p style="color: rgb(0, 0, 0);">Hash APBI2:  </p>
+            <p style="color: white;">{{ archivo.Our_Hash }}</p>
+            <p style="color: rgb(0, 0, 0);">Fecha de creación: </p>
+            <p style="color: white;"></p>
+            <p style="color: rgb(0, 0, 0);">Tamaño: </p>
+            <p style="color: white;"></p>
+            <button type="button" style="background-color: #067c20; /* Red */
+            border: none;
+            color: white;
+            padding: 10px 21px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 13px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;" onclick="quitar_informacion()">Salir</button>
+        </div>
+
       </div>
       
     </div>
@@ -231,7 +279,7 @@
 </div>
 
 <script>
-  function togglePanel(event) {
+  function togglePanel1(event) {
     event.preventDefault(); // Evita que el formulario se envíe automáticamente
     var panel = document.getElementById("panelUsuarios");
     if (panel.style.display === "none") {
@@ -246,6 +294,20 @@
     panel.style.display = "none";
   }
 
+  function quitar_informacion() {
+    var panel = document.getElementById("panelInfo");
+    panel.style.display = "none";
+  }
+
+  function togglePanel2(event) {
+  event.preventDefault();
+  var panel = document.getElementById("panelInfo");
+  if (panel.style.display === "none") {
+      panel.style.display = "block";
+  } else {
+      panel.style.display = "none";
+  }
+  }
 
 
   function obtenerNombreUsuario() {

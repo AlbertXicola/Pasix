@@ -15,6 +15,24 @@ import datetime
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.shortcuts import render
+from .models import Compartido
+from django.contrib.auth.decorators import login_required
+from .models import Fichero
+from bson import ObjectId
+from .models import Fichero
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Compartido
+from django.shortcuts import render
+from .forms import ContactoForm
+from django.shortcuts import get_object_or_404, redirect
+from .models import Fichero, Compartido
+
+
+
+
+
 
 def cierre(request):
     logout(request)
@@ -51,10 +69,6 @@ def perfil(request):
 
 
 
-
-from django.shortcuts import render
-from .forms import ContactoForm
-
 def contacto(request):
     data = {}
 
@@ -77,6 +91,9 @@ def contacto(request):
     return render(request, 'app/contacto.html', data)
 
 
+
+
+
 def registro(request):
     data = {'form': CustomUserCreationForm()}
 
@@ -89,6 +106,9 @@ def registro(request):
             return redirect('home')
 
     return render(request, 'registration/registro.html', data)
+
+
+
 
 
 def user_view(request):
@@ -109,9 +129,6 @@ def user_view(request):
 
 @csrf_exempt
 @login_required
-
-
-
 def analisis(request):
     if request.method == 'POST':
         archivos = request.FILES.getlist('files[]')
@@ -159,7 +176,7 @@ def analisis(request):
 
     return JsonResponse({'error': 'Método no permitido'}, status=405)
 
-    
+
 
 
 
@@ -192,6 +209,8 @@ def archivos(request):
             nombre_archivo = fichero_mongo.get('Nombre_Archivo')
             Anomalias = fichero_mongo.get('Maldades')
             Estado = fichero_mongo.get('Prevision')
+            Our_Hash = fichero_mongo.get('Our_Hash')
+            id_API = fichero_mongo.get('id_API')
             hora_analizado = fichero.hora_analizado.strftime("%Y-%m-%d %H:%M:%S") if fichero.hora_analizado else "N/A"
             archivos_data.append({
                 'nombre_archivo': nombre_archivo,
@@ -199,6 +218,8 @@ def archivos(request):
                 'prevision': Estado,
                 'hora_analizado': hora_analizado,  # Asegúrate de incluir la hora analizada en el diccionario de datos
                 'id': fichero.id,
+                'Our_Hash': Our_Hash,
+                'id_API': id_API,
             })
     usuarios = User.objects.all()
     context = {
@@ -213,10 +234,19 @@ def archivos(request):
 
 
 
+
 def eliminar_fichero(request, fichero_id):
+    # Obtener el objeto Fichero que se va a eliminar
     fichero = get_object_or_404(Fichero, id=fichero_id)
+    
+    # Eliminar el registro de compartidos asociados a este archivo
+    Compartido.objects.filter(id_archivo=fichero_id).delete()
+    
+    # Eliminar el objeto Fichero
     fichero.delete()
-    return redirect('archivos')  # Puedes redireccionar a cualquier página después de eliminar el registro
+    
+    # Redireccionar a la página de archivos después de eliminar el registro
+    return redirect('archivos')
 
 
 
@@ -238,7 +268,7 @@ def descargar_archivo(request, nombre_archivo):
    #     ruta_archivo = os.path.join(ruta_base_Malicioso, nombre_archivo)
     
 
-    ruta_base = os.path.join('/home/pasix/Downloads/Pasix/Finalizado', nombre_archivo)  # Reemplaza 'ruta_de_tu_directorio_de_archivos' con la ruta real
+    ruta_base = os.path.join('/home/pasix/Descargas/Pasix/Finalizado', nombre_archivo)  
     
     # Verificar si el archivo existe
     if os.path.exists(ruta_base):
@@ -252,7 +282,10 @@ def descargar_archivo(request, nombre_archivo):
     else:
         # Si el archivo no existe, devolver un error 404
         return HttpResponse(status=404)
-    
+
+
+
+
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -261,45 +294,92 @@ from .models import Compartido
 def compartir_archivo(request):
     if request.method == 'POST':
         id_usuario = request.user.id  
-        id_usuariocompartido = request.POST.get('usuario_compartir')
         id_archivo = request.POST.get('id_fichero')
+        usuarios_compartir = request.POST.getlist('usuarios_compartir[]')  # Obtener lista de usuarios seleccionados
 
-        compartido = Compartido.objects.create(id_usuario=id_usuario, id_ucompartido=id_usuariocompartido, id_archivo=id_archivo)
-        compartido.save()
+        for id_usuariocompartido in usuarios_compartir:
+            compartido = Compartido.objects.create(id_usuario=id_usuario, id_ucompartido=id_usuariocompartido, id_archivo=id_archivo)
+            compartido.save()
         
-        messages.success(request, 'Archivo compartido exitosamente.')
+        messages.success(request, 'Archivo compartido exitosamente')
         return redirect('archivos')  # Redirige a la vista 'archivos' definida en tus patrones de URL
 
     return redirect('app/archivos.html')
 
 
-
-from django.shortcuts import render
-
-from .models import Compartido
-
-from django.contrib.auth.decorators import login_required
-from .models import Fichero
-
 @login_required
-
-
-
-
 def compartido(request):
+    client = MongoClient("mongodb://pasix:20Logicalis21@127.0.0.1:27017/")
+    db = client["Proyecto"]
+    collection = db["Archivos"]
+
     usuario_sesion = request.user.id
     
     archivos_compartidos = Compartido.objects.filter(id_ucompartido=usuario_sesion)
     
+    archivos_con_documentos = []
+
     for archivo_compartido in archivos_compartidos:
         usuario_compartido = User.objects.get(id=archivo_compartido.id_usuario)
         archivo_compartido.nombre_usuario = usuario_compartido.username
         
-        # Obtener el nombre del archivo asociado a este objeto Compartido
+        id_archivo_compartido = archivo_compartido.id_archivo
+        
+        fichero = None
+        
+        try:
+            fichero = Fichero.objects.get(id=id_archivo_compartido)
+        except Fichero.DoesNotExist:
+            pass
+        
+        if fichero is not None:
+            ficheros_mongo = collection.find({"_id": ObjectId(fichero.id_archivo)})
+            hora_analizado = fichero.hora_analizado.strftime("%Y-%m-%d %H:%M:%S") if fichero.hora_analizado else "N/A"
+
+            documentos_archivo = []
+            for documento in ficheros_mongo:
+                documentos_archivo.append({
+                    'id_archivo': documento["_id"],
+                    'nombre_archivo': documento["Nombre_Archivo"],
+                    'Maldades': documento["Maldades"],
+                    'Prevision': documento["Prevision"],
+                    'hora_analizado': hora_analizado
+                })
+                
+            archivos_con_documentos.append({
+                'archivo_compartido': archivo_compartido,
+                'documentos': documentos_archivo
+            })
 
     context = {
-        'archivos_compartidos': archivos_compartidos,
+        'archivos_con_documentos': archivos_con_documentos,
         'Nombre_usuario_actual': request.user.username
     }
 
     return render(request, 'app/compartido.html', context)
+
+
+
+def eliminar_fichero_compartido(request, id):
+    compartido = get_object_or_404(Compartido, id=id)
+    compartido.delete()
+    return redirect('compartido')
+
+
+
+def descargar_archivo_compartido(request, nombre_archivo):
+    # Ruta base del archivo
+    ruta_base = os.path.join('/home/pasix/Descargas/Pasix/Finalizado', nombre_archivo)  
+    
+    # Verificar si el archivo existe
+    if os.path.exists(ruta_base):
+        # Abrir el archivo y devolverlo como una respuesta de archivo
+        with open(ruta_base, 'rb') as archivo:
+            response = HttpResponse(archivo.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{nombre_archivo}"'
+            print("Ruta del archivo:", ruta_base)
+
+            return response
+    else:
+        # Si el archivo no existe, devolver un error 404
+        return HttpResponse(status=404)

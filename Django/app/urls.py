@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, contacto, galeria, registro, olvidada, terminos, compartido , user_view, pycore_view, compartir_archivo , descargar_archivo, perfil ,cierre, archivos, analisis, usuario, eliminar_fichero
+from .views import home, contacto, galeria, registro, olvidada, terminos, compartido , user_view,eliminar_fichero_compartido,descargar_archivo_compartido, pycore_view, compartir_archivo , descargar_archivo, perfil ,cierre, archivos, analisis, usuario, eliminar_fichero
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -23,6 +23,9 @@ urlpatterns = [
     path('eliminar/<int:fichero_id>/', eliminar_fichero, name='eliminar_fichero'),
     path('descargar/<str:nombre_archivo>/', descargar_archivo, name='descargar_archivo'),
 
+
+    path('eliminar_fichero_compartido/<int:id>/', eliminar_fichero_compartido, name='eliminar_fichero_compartido'),
+    path('descargar_archivo_compartido/<str:nombre_archivo>/', descargar_archivo_compartido, name='descargar_archivo_compartido'),
 
 
     path('archivos/', archivos, name='archivos'),

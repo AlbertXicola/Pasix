@@ -14,33 +14,45 @@
         z-index: 9999; /* Asegura que esté encima de todo */
         display: none; /* Por defecto oculto */
     }
+
     .loader {
-    position: absolute;
-    top: 44.2%;
-    left: 45.8%;
-    transform: translate(-50%, -50%); /* Centramos vertical y horizontalmente */
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite; /* Aquí aplicamos la animación */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40%; /* Ancho de la barra de carga */
+        height: 15px; /* Altura de la barra de carga */
+        background-color: #f3f3f3; /* Color de fondo de la barra de carga */
+        border-radius: 4px; /* Borde redondeado */
+        overflow: hidden; /* Oculta el contenido que se desborda */
+    }
+    .loading-message{
+        position: absolute;
+        top: 45%;
+        left: 30%;
+        color: #d4d4d4;
+        font-size: 17px;
+        font-weight: bold; /* Aplica negrita */
+
+
+    }
+    .loader::after {
+        content: '';
+        display: block;
+        width: 0%;
+        height: 100%;
+        background-color: #ec3717; /* Color de la barra de carga */
+        animation: progress 3s linear infinite; /* Animación de la barra de carga */
     }
 
-    .loading-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 50%); /* Centramos horizontalmente y bajamos un poco */
-    font-size: 12px;
-    color: white;
+    @keyframes progress {
+        0% {
+            width: 0%; /* Ancho inicial */
+        }
+        100% {
+            width: 100%; /* Ancho completo */
+        }
     }
-
-     @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-    }
-
 
 
     .pycore-container {
@@ -74,7 +86,25 @@
         cursor: pointer;
         z-index: 1;
     }
-    
+    .pycore-container-2 {
+        margin-left: 120px;
+        margin-top: 90px;
+        height: 290px;
+        width: 940px;
+        background: #202020;
+        border: 4px solid #464646; /* Borde del recuadro */
+        font-size: 2em;
+        color: #b4b4b4;
+        display: flex;
+        flex-direction: column; /* Cambiar a disposición en columna */
+
+        align-items:start;
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+        cursor: pointer;
+        z-index: 1;
+    }
+
     .pycore-title {
         /* Estilos para el título de pycore */
         color: #c7c7c7;
@@ -90,7 +120,7 @@
         color: #fff;
         padding: 10px 20px;
         border: none;
-        border-radius: 4px;
+        border-radius: 0px;
         cursor: pointer;
     }
     
@@ -129,31 +159,42 @@
         margin-right: 20px; /* Ajusta el margen derecho según tus necesidades */
     }
     .buenas {
-        color: #d4d4d4;
+        color: #ffffff;
         font-size: 15px;
         margin-left: 815px;
         margin-top: 30px;
+    
 
     }
     .holas{
         padding-left: 20px;
+        color: #ec3717;
+        font-size: 10px;
+        font-weight: bold; /* Aplica negrita */
+
     }
 
     .achedos {
         color: #ffffff; /* Color de texto blanco */
-        font-size: 30px; /* Tamaño de fuente grande */
+        font-size: 20px; /* Tamaño de fuente grande */
         font-weight: bold; /* Texto en negrita */
         margin-left: 30px;
         margin-bottom: 50px;
       }
     .lica{
         color: #ffffff; /* Color de texto blanco */
-        font-size: 20px; /* Tamaño de fuente grande */
+        font-size: 15px; /* Tamaño de fuente grande */
         font-weight: bold; /* Texto en negrita */
         margin-left: 40px;
         margin-bottom: 5px;
     }
- 
+    #file-upload-label {
+    /* Estilos para el texto que indica el archivo seleccionado */
+        color: #ec3717;
+        font-size: 20px;
+        margin-top: 60px;
+        position: absolute; /* Establecer la posición absoluta */
+    }
 </style>
 
 
@@ -173,17 +214,20 @@
     {% if message_select %}
         <h1 class="buenas">{{ message_select }}</h1>
     {% endif %}
-    <h2 class="achedos">Analiza Archivos!</h2>
-    <li class="lica" >Esto es APBI2 tu analizador de confianza.</li>
-    <li class="lica" >Selecciona entre 1 y 4 archivos, y dale a analizar.</li>
-    <li class="lica" >Puede tardar como mucho 1 minuto en analizar hasta 4 archivos a la vez.</li>
-    <li class="lica" >Si tienes suerte ya estrará en nuestra Base de datos y será instantaneao.</li>
-    <li class="lica" >Recuerda que solo se pueden suvir archivos, carpetas no comprimidas y similares.</li>
+    <div class="pycore-container-2">
+        <h2 class="achedos">Analiza Archivos!</h2>
+        <li class="lica" >Esto es APBI2 tu analizador de confianza.</li>
+
+        <li class="lica" >Puede tardar como mucho 1 minuto en analizar hasta 4 archivos a la vez.</li>
+        <li class="lica" >Si tienes suerte ya estrará en nuestra Base de datos y será instantaneao.</li>
+        <li class="lica" >Recuerda que solo se pueden suvir archivos, carpetas no comprimidas y similares.</li>
+    </div>
 </div>
 
 <div id="overlay">
-    <div class="loader"></div>
     <div class="loading-message">Analizando...</div>
+    <div class="loader"></div>
+    
 </div>
 
 <script>

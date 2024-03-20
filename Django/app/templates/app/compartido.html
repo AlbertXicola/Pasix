@@ -6,159 +6,184 @@
 
 <style>
 
+  body {
+    font-family: Arial, sans-serif; /* Establecer la fuente del cuerpo */
+  }
+  .recuadro {
+    display: flex; /* Usar flexbox para el diseño flexible */
+    flex-wrap: wrap; /* Permitir que los elementos se envuelvan a una nueva línea si no caben */
+    width: 96%; /* Ancho del contenedor */
+    height: 67%; /* Altura automática para adaptarse al contenido */
+    background-color: #313131; /* Color de fondo gris */
+    border: 4px solid #00000000; /* Borde del recuadro */
+    padding: 10px; /* Espacio interno del recuadro */
+    position: relative; /* Para posicionar el contenido dentro del recuadro */
+    margin: 20px; /* Margen entre recuadros */
+    border-radius: 10px; /* Redondear los bordes del recuadro */
+    overflow: scroll; /* Habilitar el scroll cuando sea necesario */
+    scroll-behavior: smooth; /* Hacer que el scroll sea suave y fluido */
+    overscroll-behavior: contain; /* Controlar el comportamiento de sobrescrolleo */
+  }
+
+  .seleccion4 {
+    color: #ec3717;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold; /* Aplica negrita */
+  }
+
+  .recuadro-interno {
+    width: 21%; /* Ancho del recuadro interno */
+    height:43%; /* Altura automática para adaptarse al contenido */
+    background-color: #5f5f5f; /* Color de fondo gris claro */
+    display: flex;
+    align-items: flex-start; /* Alineación a la izquierda */
+    text-align: left; /* Alineación del texto a la izquierda */
+    padding: 10px; /* Espaciado interno */
+    margin: 20px;
+    border: 3px solid #6d6d6d;
+    border-radius: 10px; /* Redondear los bordes del recuadro interno */
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .achedos {
+    color: #ffffff; /* Color de texto blanco */
+    font-size: 30px; /* Tamaño de fuente grande */
+    font-weight: bold; /* Texto en negrita */
+    margin-left: 30px;
+  }
+
+  .texto-grande {
+    color: #ffffff; /* Color de texto blanco */
+    font-size: 100%; /* Tamaño de fuente grande */
+    font-weight: bold; /* Texto en negrita */
+  }
 
 
 
-    body {
-        font-family: Arial, sans-serif; /* Establecer la fuente del cuerpo */
-      }
-      .recuadro {
-        display: flex; /* Usar flexbox para el diseño flexible */
-        flex-wrap: wrap; /* Permitir que los elementos se envuelvan a una nueva línea si no caben */
-        width: 96%; /* Ancho del contenedor */
-        height: 67%; /* Altura automática para adaptarse al contenido */
-        background-color: #313131; /* Color de fondo gris */
-        border: 4px solid #00000000; /* Borde del recuadro */
-        padding: 10px; /* Espacio interno del recuadro */
-        position: relative; /* Para posicionar el contenido dentro del recuadro */
-        margin: 20px; /* Margen entre recuadros */
-        border-radius: 10px; /* Redondear los bordes del recuadro */
-      }
+  .negro {
+    color: #161616; /* Color de texto blanco */
+    font-size: 100%; /* Tamaño de fuente grande */
+    font-weight: bold; /* Texto en negrita */
+  }
 
-      .seleccion4 {
-        color: #ec3717;
-        text-decoration: none;
-        margin: 0 10px;
-        font-weight: bold; /* Aplica negrita */
-      }
+  .texto-pequeno {
+    color: #161616; /* Color de texto blanco */
+    font-size: 100; /* Tamaño de fuente pequeño */
+    font-weight: bold; /* Texto en negrita */
 
-      .recuadro-interno {
-        width: 21%; /* Ancho del recuadro interno */
-        height:34%; /* Altura automática para adaptarse al contenido */
-        background-color: #5f5f5f; /* Color de fondo gris claro */
-        display: flex;
-        align-items: flex-start; /* Alineación a la izquierda */
-        text-align: left; /* Alineación del texto a la izquierda */
-        padding: 10px; /* Espaciado interno */
-        margin: 20px;
-        border: 3px solid #6d6d6d;
-        border-radius: 10px; /* Redondear los bordes del recuadro interno */
-        display: flex;
-        justify-content: space-between;
-      }
+  }
+  .verde {
+    color: rgb(26, 179, 46); /* Cambiar el color del texto a azul */
+  }
+  .amarillo {
+    color: rgb(219, 209, 59); /* Cambiar el color del texto a azul */
+  }
+  .rojo {
+    color: rgb(175, 45, 45); /* Cambiar el color del texto a azul */
+  }
+  
+  .descargar {
+    margin-top:25px;
+    margin-right: 20px;
+    background-color: #3fa53b; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Quitar borde */
+    font-size:20px ;
 
-      .achedos {
-        color: #ffffff; /* Color de texto blanco */
-        font-size: 30px; /* Tamaño de fuente grande */
-        font-weight: bold; /* Texto en negrita */
-        margin-left: 30px;
-      }
+    cursor: pointer; /* Cambiar cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color */
+    border-radius: 2px; /* Redondear los bordes del recuadro interno */
+  }
+  .eliminar {
+    margin-top:25px;
+    margin-right: 20px;
 
-      .texto-grande {
-        color: #ffffff; /* Color de texto blanco */
-        font-size: 100%; /* Tamaño de fuente grande */
-        font-weight: bold; /* Texto en negrita */
-      }
+    font-size:23px ;
+    background-color: #a32c2c; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Quitar borde */
 
-      .texto-pequeno {
-        color: #161616; /* Color de texto blanco */
-        font-size: 100; /* Tamaño de fuente pequeño */
-        font-weight: bold; /* Texto en negrita */
+    cursor: pointer; /* Cambiar cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color */
 
-      }
-      .verde {
-        color: rgb(26, 179, 46); /* Cambiar el color del texto a azul */
-      }
-      .amarillo {
-        color: rgb(219, 209, 59); /* Cambiar el color del texto a azul */
-      }
-      .rojo {
-        color: rgb(175, 45, 45); /* Cambiar el color del texto a azul */
-      }
-      
-      .descargar {
-        margin-top:25px;
-        margin-right: 20px;
-        background-color: #3fa53b; /* Color de fondo */
-        color: white; /* Color del texto */
-        border: none; /* Quitar borde */
-        font-size:20px ;
+    border-radius: 2px; /* Redondear los bordes del recuadro interno */
+  }
+  .compartir {
+    margin-top:20px;
+    margin-right: 20px;
 
-        cursor: pointer; /* Cambiar cursor al pasar por encima */
-        transition: background-color 0.3s; /* Transición suave para el cambio de color */
-        border-radius: 2px; /* Redondear los bordes del recuadro interno */
-      }
-      .eliminar {
-        margin-top:25px;
-        margin-right: 20px;
+    font-size:21px ;
+    background-color: #2c3ea3; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Quitar borde */
 
-        font-size:23px ;
-        background-color: #a32c2c; /* Color de fondo */
-        color: white; /* Color del texto */
-        border: none; /* Quitar borde */
+    cursor: pointer; /* Cambiar cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color */
 
-        cursor: pointer; /* Cambiar cursor al pasar por encima */
-        transition: background-color 0.3s; /* Transición suave para el cambio de color */
+    border-radius: 2px; /* Redondear los bordes del recuadro interno */
+  }
+  .compartir:hover,
+  .eliminar:hover,
+  .descargar:hover {
+    background-color: #444; /* Cambiar color de fondo al pasar el cursor */
+  }
 
-        border-radius: 2px; /* Redondear los bordes del recuadro interno */
-      }
-      .compartir {
-        margin-top:20px;
-        margin-right: 20px;
-
-        font-size:21px ;
-        background-color: #2c3ea3; /* Color de fondo */
-        color: white; /* Color del texto */
-        border: none; /* Quitar borde */
-
-        cursor: pointer; /* Cambiar cursor al pasar por encima */
-        transition: background-color 0.3s; /* Transición suave para el cambio de color */
-
-        border-radius: 2px; /* Redondear los bordes del recuadro interno */
-      }
-      .compartir:hover,
-      .eliminar:hover,
-      .descargar:hover {
-        background-color: #444; /* Cambiar color de fondo al pasar el cursor */
-      }
+</style>
 
 
-    </style>
+
 <h2 class="achedos">Compartido</h2>
 <div class="recuadro">
+  {% for archivo_con_documentos in archivos_con_documentos %}
+    {% with archivo=archivo_con_documentos.archivo_compartido %}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <div class="recuadro-interno">
+        <div class="1">
 
-
-  {% for archivo in archivos_compartidos %}
-  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <div class="recuadro-interno">
-      <div class="1">
-        <div class="texto-grande">Nombre del Archivo:</div>
-        <div class="texto-pequeno">{{ archivo.nombre_archivo }}</div>
-    
-        <div class="texto-grande">Anomalías Detectadas:</div>
-        {% if archivo.anomalias == 0 %}
-          <div class="texto-pequeno verde">{{ archivo.anomalias }}</div>
-        {% elif archivo.anomalias >= 1 and archivo.anomalias <= 5 %}
-          <div class="texto-pequeno amarillo">{{ archivo.anomalias }}</div>
-        {% elif archivo.anomalias >= 6 and archivo.anomalias <= 1000 %}
-          <div class="texto-pequeno rojo">{{ archivo.anomalias }}</div>
-        {% endif %}
-    
-        <div class="texto-grande">Estado del Archivo:</div>
-        <div class="texto-pequeno">{{ archivo.prevision }}</div>
-        <div class="texto-grande">Hora Analizado</div>
-        <div class="texto-pequeno">{{ archivo.hora_analizado }}</div>
+          {% for documento in archivo_con_documentos.documentos %}
+            <div class="texto-grande">Nombre del Archivo:</div>
+            <div class="texto-pequeno">{{ documento.nombre_archivo }}</div>
+            <div class="texto-grande">Anomalías Detectadas:</div>
+            {% if documento.Maldades == 0 %}
+              <div class="texto-pequeno verde">{{ documento.Maldades }}</div>
+            {% elif documento.Maldades >= 1 and documento.Maldades <= 5 %}
+              <div class="texto-pequeno amarillo">{{ documento.Maldades }}</div>
+            {% elif documento.Maldades >= 6 and documento.Maldades <= 1000 %}
+              <div class="texto-pequeno rojo">{{ documento.Maldades }}</div>
+            {% endif %}
+            <div class="texto-grande">Estado del Archivo:</div>
+            <div class="texto-pequeno">{{ documento.Prevision }}</div>
+            <div class="texto-grande">Hora Analizado</div>
+            <div class="texto-pequeno">{{ documento.hora_analizado }}</div>
+          {% endfor %}
+          <div class="texto-grande"> Compartido por:</div> 
+          <div class="negro">@{{ archivo.nombre_usuario }}</div>
+        </div>
+        <div class="2">
+          <form action="{% url 'eliminar_fichero_compartido' archivo.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" value="Eliminar" class="eliminar" onclick="return confirm('¿Estás seguro de que quieres eliminar este archivo?')">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </form>
+          {% for documento in archivo_con_documentos.documentos %}
+            <form action="{% url 'descargar_archivo_compartido' documento.nombre_archivo %}" method="get">
+              {% csrf_token %}
+              <input type="hidden" name="nombre_archivo" value="{{ documento.nombre_archivo }}">
+              <button class="descargar" onclick="return confirm('¿Estás seguro de que quieres descargar este archivo?')">
+                <i class="fas fa-download"></i>
+              </button>
+            </form>
+          {% endfor %}
+        </div>
       </div>
-    
-      <div>
-        <span class="texto-grande">{{ archivo.id_archivo }} Compartido por: {{ archivo.nombre_usuario }}</span>
-      </div>
-    </div>
-    
+    {% endwith %}
   {% endfor %}
-
 </div>
+
+
 
 {% endblock %}
 
