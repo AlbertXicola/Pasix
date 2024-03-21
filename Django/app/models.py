@@ -37,3 +37,6 @@ class Compartido(models.Model):
     
     def __str__(self):
         return f"El/Los Fichero/s {self.id_archivo} a/n sido compartido/s por {self.id_usuario} para {self.id_ucompartido}"
+    
+    
+

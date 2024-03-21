@@ -209,8 +209,8 @@ def archivos(request):
             nombre_archivo = fichero_mongo.get('Nombre_Archivo')
             Anomalias = fichero_mongo.get('Maldades')
             Estado = fichero_mongo.get('Prevision')
-            Our_Hash = fichero_mongo.get('Our_Hash')
-            id_API = fichero_mongo.get('id_API')
+            nuestrohash = fichero_mongo.get('Our_Hash')
+            hashapi = fichero_mongo.get('id_API')
             hora_analizado = fichero.hora_analizado.strftime("%Y-%m-%d %H:%M:%S") if fichero.hora_analizado else "N/A"
             archivos_data.append({
                 'nombre_archivo': nombre_archivo,
@@ -218,8 +218,8 @@ def archivos(request):
                 'prevision': Estado,
                 'hora_analizado': hora_analizado,  # Asegúrate de incluir la hora analizada en el diccionario de datos
                 'id': fichero.id,
-                'Our_Hash': Our_Hash,
-                'id_API': id_API,
+                'nuestrohash': nuestrohash,
+                'hashapi': hashapi,
             })
     usuarios = User.objects.all()
     context = {
@@ -338,12 +338,15 @@ def compartido(request):
 
             documentos_archivo = []
             for documento in ficheros_mongo:
+
                 documentos_archivo.append({
                     'id_archivo': documento["_id"],
                     'nombre_archivo': documento["Nombre_Archivo"],
                     'Maldades': documento["Maldades"],
                     'Prevision': documento["Prevision"],
-                    'hora_analizado': hora_analizado
+                    'hora_analizado': hora_analizado,
+                    'nuestrohash': documento["Our_Hash"],
+                    'hashapi': documento ["id_API"],
                 })
                 
             archivos_con_documentos.append({

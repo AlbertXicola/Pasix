@@ -124,9 +124,9 @@
       {% if resultado.data.Maldades == 0 %}
       <div class="texto-grande verde">Anomalias Detectadas:</div>
       {% elif resultado.data.Maldades >= 1 and resultado.data.Maldades <= 5 %}
-      <div class="texto-grande amarillo">Maldades Detectadas:</div>
+      <div class="texto-grande amarillo">Anomalias Detectadas:</div>
       {% elif resultado.data.Maldades >= 6 and resultado.data.Maldades <= 1000 %}
-      <div class="texto-grande rojo">Maldades Detectadas:</div>
+      <div class="texto-grande rojo">Anomalias Detectadas:</div>
       {% endif %}
       <div class="texto-pequeno">{{ resultado.data.Maldades }}</div>
       

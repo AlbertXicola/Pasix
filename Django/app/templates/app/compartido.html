@@ -86,11 +86,12 @@
   
   .descargar {
     margin-top:25px;
-    margin-right: 20px;
+    margin-right: 15px;
     background-color: #3fa53b; /* Color de fondo */
     color: white; /* Color del texto */
     border: none; /* Quitar borde */
-    font-size:20px ;
+    font-size:15px ;
+    width: 24px; /* Ancho del botón ajustado */
 
     cursor: pointer; /* Cambiar cursor al pasar por encima */
     transition: background-color 0.3s; /* Transición suave para el cambio de color */
@@ -99,8 +100,9 @@
   .eliminar {
     margin-top:25px;
     margin-right: 20px;
+    width: 24px; /* Ancho del botón ajustado */
 
-    font-size:23px ;
+    font-size:16px ;
     background-color: #a32c2c; /* Color de fondo */
     color: white; /* Color del texto */
     border: none; /* Quitar borde */
@@ -109,6 +111,19 @@
     transition: background-color 0.3s; /* Transición suave para el cambio de color */
 
     border-radius: 2px; /* Redondear los bordes del recuadro interno */
+  }
+  .info {
+    margin-top: 25px;
+    margin-right: 20px;
+
+    width: 24px; /* Ancho del botón ajustado */
+    font-size: 16px;
+    background-color: #353535;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 2px;
   }
   .compartir {
     margin-top:20px;
@@ -176,14 +191,52 @@
                 <i class="fas fa-download"></i>
               </button>
             </form>
+          
+          <button class="info" onclick="togglePanel2('{{ archivo.id }}')"><i class="fas fa-info"></i></button>
+
+          <div id="panelInfo_{{ archivo.id }}" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 10px; background-color: #5f5f5f; padding: 20px; border: 3px solid #6d6d6d;">
+            <!-- Contenido del panel -->
+            <p style="color: white;">Detalles adicionales del archivo:</p>
+            <!-- Resto del contenido -->
+            <p style="color: rgb(0, 0, 0);">Hash Api VT: </p>
+            <p style="color: white;">{{ documento.hashapi }}</p>
+            <p style="color: rgb(0, 0, 0);">Hash APBI2:  </p>
+            <p style="color: white;">{{ documento.nuestrohash }}</p>
+            <!-- Resto del contenido -->
+            <button type="button" style="background-color: #067c20; /* Red */
+            border: none;
+            color: white;
+            padding: 10px 21px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 13px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;" onclick="quitar_informacion('{{ archivo.id }}')">Salir</button>
           {% endfor %}
+          </div>
         </div>
       </div>
     {% endwith %}
   {% endfor %}
 </div>
 
+<script>
+    function togglePanel2(id) {
+  var panel = document.getElementById("panelInfo_" + id);
+  if (panel.style.display === "none") {
+    panel.style.display = "block";
+  } else {
+    panel.style.display = "none";
+  }
+  }
 
+  function quitar_informacion(id) {
+    var panel = document.getElementById("panelInfo_" + id);
+    panel.style.display = "none";
+  }
+</script>
 
 {% endblock %}
 
